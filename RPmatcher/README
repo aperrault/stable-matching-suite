@@ -1,0 +1,168 @@
+1. Roth Peranson Matcher ("matchrp")
+==================================================================
+Implements the Roth Peranson matching algorithm for residents with
+couples and hospital programs as described in The Redesign of the
+Matching Market for American Physicians: Some Engineering Aspects of
+Economic Design, The American Economic Review 89 (4):
+748–780. doi:10.1257/aer.89.4.748
+
+Note that this paper only provides an outline of the algorithm,
+certainly not precise enough for an unambigious implementation.
+
+Here are a few items that might diverge from the true algorithm:
+
+a) Treatment of couples who both want to enter the same program.  Our
+   resolution is that BOTH couples must be prefered to the bottom two
+   currently matched residents (or there is room in the
+   program). Couples matching into the same program is not mentioned in
+   RP.  Our treatment is the same as "Stability in large matching
+   markets with complementarities, Itai Ashalgi, Mark Braverman,
+   Avinatan Hassidim"
+
+b) Processing of the Program Stack. in RP the program stack is used
+   to identify potentially unstable matches. After all
+   residents/couples are processed (in the k-th round) each program in 
+   the program stack is examined to determine if there is a resident
+   whose matching has become unstable because of room created in that
+   program (due to the 2nd member of a couple leaving because their
+   partner was bumped from another program).
+
+   The program stack is actually an "optimization" to allow only
+   examining those programs that might cause instabilities. 
+
+   However this requires maintaining information at each stage of the
+   matching to track these "instablity creating" programs. Instead, 
+   we just examine all residents after processing them all to see if
+   there are any unstable residents at all. Those unstable residents
+   are then reprocessed. 
+
+c) Cycle checking. RP "specify" that a cycle is in progress if
+   resident r is unmatched from the same program multiple times.
+   However, it is possible that r might be unmatched from the same
+   program multiple times even though the program is converging to a
+   stable match. It might even be be possible that we might unmatch r
+   an exponential number of times from the same program while still
+   making progress to a stable match? (This is unknown). In the
+   absense of a definitive answer to this question, multiple times is
+   taken to a configurable number that defaults to
+   124*1024. Completely accurate cycle checking could be obtained by
+   storing the entire program state and checking for cycles in the
+   program state. This means the current match and the state of the
+   processing stacks. However, this is a lot of data to cache and
+   would cause memory problems. So we go with the "large" number of
+   unmatches from the same program. Note also that the implementation
+   actually counts matches not unmatches to the same program...which
+   is of course the same thing.
+
+d) randomization. There are hints in RP that some randomization of the
+   order in which couples are processed can help in finding a
+   matching. However, it is not clear if randomization is included in
+   their algorithm. The program includes an option to try mutiple
+   rounds where the ordering of the couples is randomized. In this
+   case the cycle checking limit is usually set lower. The default is
+   200, but this value can be set at the command line.
+
+------------------------------------------------------------------
+2. Input Problem Format (Matching with Couples)
+   (Will be used for all matchers)
+==================================================================
+
+The matchers are given a problem specification file. The lines of this
+file each specify one bit of information about the matching
+problem. The particular information they specify is determined by the
+first character of the line. The information cannot extend over more
+than one line.
+
+Starting Character     Meaning
+blank or #             comment line ignored
+r                      resident specification line
+c                      couple specification line
+p                      program specification line
+anything else          error
+
+All residents/couples and programs are specified by ID (RIDs, CIDs and PIDs). These are integers >= 0.
+
+r line
+-----
+"r rid rol"
+where rid is the resident id and rol is a sequence of program ids (pids). The order these pids occur is the rank ordering of these programs for resident rid (most prefered programs appear first).
+
+c line
+------
+"c cid rid1 rid2 rol"
+where cid is the couple id, rid1 and rid2 are the resident ids of the first and second members of the couple. Note that rid1 and rid2 CANNOT appear in other "r" lines---"r" lines are for single residents. "rol" is a sequence of PIDs. There should be an even number of these. Each pair in this sequence pid1 pid2 ranks the matching where rid1 goes to pid1 and rid2 goes to pid2.
+
+p line
+------
+"p pid quota rol"
+where pid is the program id, quota is the program's quota (integer >= 0) and rol is an ordered sequence of resident ids. 
+
+Example
+------
+see the directory "Tests" for an examples
+------------------------------------------------------------------
+
+3. Verifier ("matchvf")
+   Verifies that a match is stable.
+==================================================================
+The verifier "matchvf" takes as input a problem (in the format
+specified above) and a matching in format below. It outputs 
+
+a. "No match found."   The matching file does not contain a matching
+b. "Match ok."         The matching file specifes a stable matching
+c. "ERROR: Unstable Match."   The matching file specifies an unstable matching.
+
+a and b have return codes 0, c has return code 1.
+
+The matching file format has lines each of which specifies one bit of
+information about the match. The particular information they specify
+is determined by the first character of the line. The information
+cannot extend over more than one line.
+
+Starting Character     Meaning
+blank or #             comment line ignored
+r                      resident match line
+m                      match valid line (optional)
+
+m line
+------
+"m [0/1]"
+
+If 1 then the file should contain a valid match. This allows the
+matcher more gracefully handle a time out or detect a cycle: it can
+fail to output a matching file. (If the match file is empty "m 0" is
+implicit). In these cases the matcher is asserting that it could not
+find a match. 
+
+When it does find a match it should place a "m 1" line in the match
+file. This asserts it found a match, now the verifier can check that
+the match is correct. 
+
+r line
+------
+"r rid pid"
+
+Resident rid is matched to program pid.
+------------------------------------------------------------------
+
+Versions
+==================================================================
+V0.5
+
+-Residents with first and second year matches not yet handled.
+- Even/odd requirements on program matches not handled
+- program reversions not handled. 
+- No cycle checking performed
+
+V0.6
++ cycle checking.
+
+V1.0
+Factor the match code into separate files. Fix bugs introduced in
+V0.6. Add cpu and memory limit flags. Output more stats about the
+match and the run time. Add the randomization of couples option. 
+Note that the verifier code still uses the old V0.5 code base...was
+not updated to the new factored code base as it is already stable. 
+
+V1.5
+Implement KPR matcher of KRP 2013, selected with -alg=2 flag.

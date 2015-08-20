@@ -1,0 +1,43 @@
+#matchrp 1.0
+#Problem Read:
+#Matched singles
+#CPU = 0
+#MEM = 1MB
+#Total random reorders of couples 0
+#Max Repeated Matches = 0
+#Total Matches Made = 8
+#Total UnMatches Made = 0
+#Total Resident Matches Made = 8
+#Total Resident UnMatches Made = 0
+#Total Couple Matches Made = 0
+#Total Couple UnMatches Made = 0
+#Final Match:
+#Single Residents:
+#Resident 0 = 0
+#Resident 1 = 0
+#Resident 2 = 1
+#Resident 3 = 1
+#Resident 4 = 2
+#Resident 5 = 2
+#Resident 6 = 3
+#Resident 7 = 3
+#Couples:
+#Programs:
+#Program 0 = [ 0 1 ] (2) Spare Capacity = 0
+#Program 1 = [ 2 3 ] (2) Spare Capacity = 0
+#Program 2 = [ 4 5 ] (2) Spare Capacity = 0
+#Program 3 = [ 6 7 ] (2) Spare Capacity = 0
+#Program 4 = [ ] (0) Spare Capacity = 2
+#Program 5 = [ ] (0) Spare Capacity = 2
+#Program 6 = [ ] (0) Spare Capacity = 2
+#Program 7 = [ ] (0) Spare Capacity = 2
+
+m 1
+r 0 0
+r 1 0
+r 2 1
+r 3 1
+r 4 2
+r 5 2
+r 6 3
+r 7 3

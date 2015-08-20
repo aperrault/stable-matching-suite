@@ -1,0 +1,39 @@
+#Final Match:
+#Single Residents:
+#Resident 0 = 6
+#Resident 1 = 6
+#Resident 2 = 5
+#Resident 3 = 5
+#Resident 4 = 4
+#Resident 5 = 4
+#Resident 6 = 3
+#Resident 7 = 3
+#Couples:
+#Couple 0 (8,9) = (2, 2)
+#Couple 1 (10,11) = (0, 0)
+#Couple 2 (12,13) = (1, 1)
+#Programs:
+#Program 0 = [ 11 10 ] (2)
+#Program 1 = [ 13 12 ] (2)
+#Program 2 = [ 9 8 ] (2)
+#Program 3 = [ 7 6 ] (2)
+#Program 4 = [ 5 4 ] (2)
+#Program 5 = [ 3 2 ] (2)
+#Program 6 = [ 1 0 ] (2)
+#Program 7 = [ ] (0)
+
+m 1
+r 0 6
+r 1 6
+r 2 5
+r 3 5
+r 4 4
+r 5 4
+r 6 3
+r 7 3
+r 8 2
+r 9 2
+r 10 0
+r 11 0
+r 12 1
+r 13 1

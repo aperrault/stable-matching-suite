@@ -1,0 +1,1078 @@
+#matchrp 1.0
+#Problem Read:
+#Matched singles
+#CPU = 0.008001
+#MEM = 2MB
+#Total random reorders of couples 0
+#Max Repeated Matches = 1
+#Total Matches Made = 631
+#Total UnMatches Made = 143
+#Total Resident Matches Made = 619
+#Total Resident UnMatches Made = 143
+#Total Couple Matches Made = 12
+#Total Couple UnMatches Made = 0
+#Final Match:
+#Single Residents:
+#Resident 0 = 19
+#Resident 1 = 18
+#Resident 2 = 15
+#Resident 3 = 69
+#Resident 4 = 66
+#Resident 5 = 61
+#Resident 6 = 42
+#Resident 7 = 15
+#Resident 8 = 66
+#Resident 9 = 44
+#Resident 10 = 21
+#Resident 11 = 14
+#Resident 12 = 31
+#Resident 13 = 55
+#Resident 14 = 10
+#Resident 15 = 27
+#Resident 17 = 20
+#Resident 18 = 28
+#Resident 19 = 57
+#Resident 20 = 12
+#Resident 21 = 67
+#Resident 22 = 26
+#Resident 23 = 40
+#Resident 24 = 37
+#Resident 25 = 25
+#Resident 26 = 43
+#Resident 27 = 1
+#Resident 28 = 31
+#Resident 29 = 6
+#Resident 30 = 52
+#Resident 31 = 31
+#Resident 33 = 56
+#Resident 34 = 43
+#Resident 35 = 22
+#Resident 36 = 20
+#Resident 37 = 2
+#Resident 39 = 52
+#Resident 40 = 15
+#Resident 43 = 14
+#Resident 44 = 2
+#Resident 45 = 49
+#Resident 46 = 28
+#Resident 47 = 29
+#Resident 48 = 41
+#Resident 49 = 25
+#Resident 50 = 54
+#Resident 51 = 25
+#Resident 52 = 59
+#Resident 53 = 22
+#Resident 54 = 64
+#Resident 55 = 51
+#Resident 57 = 33
+#Resident 58 = 27
+#Resident 59 = 0
+#Resident 60 = 31
+#Resident 61 = 46
+#Resident 62 = 33
+#Resident 63 = 2
+#Resident 64 = 42
+#Resident 65 = 17
+#Resident 66 = 20
+#Resident 68 = 34
+#Resident 69 = 45
+#Resident 71 = 59
+#Resident 72 = 44
+#Resident 73 = 50
+#Resident 74 = 33
+#Resident 76 = 10
+#Resident 77 = 5
+#Resident 78 = 32
+#Resident 79 = 29
+#Resident 80 = 35
+#Resident 81 = 53
+#Resident 82 = 30
+#Resident 83 = 2
+#Resident 84 = 34
+#Resident 85 = 40
+#Resident 86 = 8
+#Resident 87 = 17
+#Resident 88 = 70
+#Resident 89 = 34
+#Resident 91 = 45
+#Resident 92 = 10
+#Resident 93 = 61
+#Resident 94 = 11
+#Resident 95 = 52
+#Resident 96 = 42
+#Resident 97 = 63
+#Resident 98 = 43
+#Resident 99 = 58
+#Resident 100 = 29
+#Resident 101 = 47
+#Resident 102 = 57
+#Resident 103 = 63
+#Resident 104 = 23
+#Resident 105 = 20
+#Resident 106 = 0
+#Resident 107 = 24
+#Resident 108 = 3
+#Resident 109 = 12
+#Resident 110 = 27
+#Resident 111 = 7
+#Resident 112 = 37
+#Resident 113 = 69
+#Resident 114 = 53
+#Resident 115 = 28
+#Resident 116 = 50
+#Resident 117 = 42
+#Resident 118 = 53
+#Resident 119 = 14
+#Resident 120 = 46
+#Resident 121 = 0
+#Resident 122 = 12
+#Resident 123 = 70
+#Resident 124 = 6
+#Resident 125 = 11
+#Resident 126 = 15
+#Resident 127 = 32
+#Resident 128 = 4
+#Resident 129 = 70
+#Resident 130 = 53
+#Resident 131 = 20
+#Resident 132 = 65
+#Resident 133 = 46
+#Resident 134 = 63
+#Resident 135 = 21
+#Resident 136 = 39
+#Resident 137 = 53
+#Resident 138 = 44
+#Resident 139 = 56
+#Resident 140 = 27
+#Resident 141 = 23
+#Resident 142 = 46
+#Resident 143 = 19
+#Resident 144 = 15
+#Resident 145 = 27
+#Resident 146 = 30
+#Resident 147 = 50
+#Resident 148 = 38
+#Resident 149 = 19
+#Resident 150 = 19
+#Resident 151 = 61
+#Resident 152 = 50
+#Resident 153 = 62
+#Resident 155 = 68
+#Resident 156 = 56
+#Resident 157 = 41
+#Resident 158 = 40
+#Resident 159 = 38
+#Resident 160 = 41
+#Resident 161 = 19
+#Resident 162 = 26
+#Resident 163 = 37
+#Resident 164 = 26
+#Resident 165 = 4
+#Resident 166 = 7
+#Resident 167 = 11
+#Resident 168 = 26
+#Resident 169 = 42
+#Resident 170 = 18
+#Resident 171 = 24
+#Resident 172 = 22
+#Resident 173 = 23
+#Resident 174 = 30
+#Resident 175 = 63
+#Resident 176 = 46
+#Resident 177 = 47
+#Resident 178 = 44
+#Resident 179 = 68
+#Resident 180 = 63
+#Resident 181 = 10
+#Resident 182 = 60
+#Resident 183 = 45
+#Resident 184 = 48
+#Resident 185 = 14
+#Resident 186 = 65
+#Resident 187 = 58
+#Resident 188 = 51
+#Resident 189 = 18
+#Resident 190 = 65
+#Resident 191 = 18
+#Resident 192 = 63
+#Resident 193 = 16
+#Resident 194 = 7
+#Resident 195 = 66
+#Resident 196 = 52
+#Resident 197 = 36
+#Resident 198 = 22
+#Resident 199 = 67
+#Resident 200 = 16
+#Resident 201 = 61
+#Resident 202 = 12
+#Resident 203 = 16
+#Resident 204 = 58
+#Resident 205 = 55
+#Resident 206 = 69
+#Resident 207 = 66
+#Resident 208 = 57
+#Resident 209 = 67
+#Resident 210 = 27
+#Resident 211 = 41
+#Resident 212 = 31
+#Resident 213 = 64
+#Resident 214 = 33
+#Resident 215 = 60
+#Resident 216 = 7
+#Resident 217 = 22
+#Resident 218 = 57
+#Resident 219 = 15
+#Resident 220 = 66
+#Resident 221 = 7
+#Resident 222 = 11
+#Resident 223 = 48
+#Resident 224 = 13
+#Resident 225 = 53
+#Resident 226 = 8
+#Resident 227 = 4
+#Resident 228 = 0
+#Resident 229 = 46
+#Resident 230 = 66
+#Resident 232 = 40
+#Resident 233 = 8
+#Resident 234 = 69
+#Resident 235 = 54
+#Resident 237 = 69
+#Resident 238 = 9
+#Resident 239 = 10
+#Resident 240 = 15
+#Resident 241 = 65
+#Resident 242 = 49
+#Resident 243 = 34
+#Resident 244 = 17
+#Resident 245 = 55
+#Resident 246 = 41
+#Resident 247 = 42
+#Resident 248 = 69
+#Resident 249 = 46
+#Resident 250 = 9
+#Resident 251 = 65
+#Resident 252 = 35
+#Resident 253 = 16
+#Resident 254 = 32
+#Resident 255 = 9
+#Resident 256 = 17
+#Resident 257 = 43
+#Resident 258 = 69
+#Resident 260 = 36
+#Resident 261 = 21
+#Resident 262 = 17
+#Resident 263 = 9
+#Resident 264 = 45
+#Resident 265 = 56
+#Resident 266 = 42
+#Resident 267 = 34
+#Resident 268 = 20
+#Resident 269 = 12
+#Resident 270 = 61
+#Resident 271 = 21
+#Resident 272 = 32
+#Resident 273 = 60
+#Resident 274 = 37
+#Resident 275 = 70
+#Resident 276 = 43
+#Resident 277 = 2
+#Resident 278 = 64
+#Resident 279 = 63
+#Resident 280 = 24
+#Resident 282 = 11
+#Resident 283 = 9
+#Resident 284 = 40
+#Resident 285 = 25
+#Resident 286 = 30
+#Resident 287 = 14
+#Resident 288 = 45
+#Resident 289 = 1
+#Resident 290 = 4
+#Resident 291 = 48
+#Resident 292 = 16
+#Resident 293 = 51
+#Resident 294 = 3
+#Resident 295 = 68
+#Resident 296 = 20
+#Resident 297 = 36
+#Resident 298 = 35
+#Resident 299 = 39
+#Resident 300 = 9
+#Resident 301 = 8
+#Resident 302 = 66
+#Resident 303 = 7
+#Resident 304 = 18
+#Resident 306 = 30
+#Resident 307 = 55
+#Resident 308 = 56
+#Resident 309 = 25
+#Resident 310 = 47
+#Resident 311 = 68
+#Resident 312 = 18
+#Resident 313 = 29
+#Resident 314 = 55
+#Resident 315 = 14
+#Resident 316 = 3
+#Resident 317 = 48
+#Resident 318 = 1
+#Resident 319 = 38
+#Resident 320 = 34
+#Resident 321 = 44
+#Resident 322 = 29
+#Resident 323 = 56
+#Resident 324 = 30
+#Resident 325 = 10
+#Resident 326 = 46
+#Resident 327 = 6
+#Resident 328 = 54
+#Resident 329 = 60
+#Resident 330 = 67
+#Resident 331 = 55
+#Resident 332 = 53
+#Resident 334 = 52
+#Resident 335 = 21
+#Resident 336 = 13
+#Resident 337 = 37
+#Resident 338 = 47
+#Resident 339 = 60
+#Resident 340 = 35
+#Resident 341 = 6
+#Resident 342 = 61
+#Resident 343 = 16
+#Resident 344 = 28
+#Resident 345 = 24
+#Resident 346 = 39
+#Resident 347 = 23
+#Resident 348 = 61
+#Resident 349 = 31
+#Resident 350 = 15
+#Resident 351 = 35
+#Resident 352 = 5
+#Resident 353 = 41
+#Resident 354 = 52
+#Resident 355 = 70
+#Resident 356 = 2
+#Resident 358 = 60
+#Resident 359 = 12
+#Resident 360 = 9
+#Resident 362 = 25
+#Resident 363 = 65
+#Resident 364 = 67
+#Resident 365 = 65
+#Resident 366 = 11
+#Resident 367 = 4
+#Resident 368 = 21
+#Resident 369 = 59
+#Resident 370 = 28
+#Resident 371 = 33
+#Resident 372 = 21
+#Resident 373 = 66
+#Resident 374 = 28
+#Resident 375 = 12
+#Resident 376 = 3
+#Resident 377 = 2
+#Resident 378 = 1
+#Resident 379 = 3
+#Resident 380 = 56
+#Resident 381 = 64
+#Resident 383 = 25
+#Resident 384 = 9
+#Resident 385 = 53
+#Resident 386 = 19
+#Resident 387 = 35
+#Resident 388 = 59
+#Resident 389 = 0
+#Resident 390 = 41
+#Resident 391 = 60
+#Resident 392 = 41
+#Resident 393 = 27
+#Resident 394 = 49
+#Resident 395 = 7
+#Resident 396 = 4
+#Resident 397 = 15
+#Resident 398 = 62
+#Resident 399 = 36
+#Resident 400 = 50
+#Resident 401 = 8
+#Resident 402 = 33
+#Resident 403 = 61
+#Resident 404 = 17
+#Resident 405 = 62
+#Resident 406 = 5
+#Resident 407 = 59
+#Resident 408 = 54
+#Resident 409 = 18
+#Resident 410 = 48
+#Resident 411 = 22
+#Resident 412 = 67
+#Resident 414 = 38
+#Resident 415 = 57
+#Resident 416 = 58
+#Resident 417 = 29
+#Resident 418 = 23
+#Resident 419 = 20
+#Resident 420 = 55
+#Resident 421 = 68
+#Resident 422 = 43
+#Resident 423 = 6
+#Resident 424 = 7
+#Resident 425 = 16
+#Resident 426 = 26
+#Resident 427 = 26
+#Resident 428 = 56
+#Resident 429 = 20
+#Resident 430 = 39
+#Resident 431 = 69
+#Resident 432 = 35
+#Resident 433 = 47
+#Resident 434 = 4
+#Resident 435 = 34
+#Resident 436 = 36
+#Resident 437 = 39
+#Resident 438 = 45
+#Resident 439 = 44
+#Resident 440 = 58
+#Resident 441 = 28
+#Resident 442 = 45
+#Resident 443 = 28
+#Resident 444 = 68
+#Resident 445 = 4
+#Resident 446 = 47
+#Resident 447 = 42
+#Resident 448 = 47
+#Resident 449 = 66
+#Resident 450 = 64
+#Resident 451 = 40
+#Resident 452 = 48
+#Resident 453 = 30
+#Resident 454 = 62
+#Resident 455 = 32
+#Resident 456 = 57
+#Resident 457 = 10
+#Resident 458 = 33
+#Resident 459 = 34
+#Resident 460 = 42
+#Resident 461 = 13
+#Resident 462 = 52
+#Resident 463 = 22
+#Resident 464 = 53
+#Resident 465 = 8
+#Resident 466 = 54
+#Resident 467 = 16
+#Resident 468 = 40
+#Resident 469 = 3
+#Resident 470 = 12
+#Resident 471 = 19
+#Resident 472 = 35
+#Resident 474 = 64
+#Resident 475 = 1
+#Resident 476 = 45
+#Resident 477 = 49
+#Resident 478 = 70
+#Resident 479 = 35
+#Resident 481 = 30
+#Resident 482 = 52
+#Resident 483 = 0
+#Resident 484 = 24
+#Resident 485 = 49
+#Resident 486 = 25
+#Resident 487 = 26
+#Resident 488 = 39
+#Resident 489 = 39
+#Resident 491 = 28
+#Resident 492 = 43
+#Resident 493 = 62
+#Resident 494 = 51
+#Resident 495 = 26
+#Resident 496 = 63
+#Resident 497 = 13
+#Resident 498 = 41
+#Resident 499 = 65
+#Couples:
+#Couple 0[56,236] (56,236) = (38, 38)
+#Couple 1[67,473] (67,473) = (21, 4)
+#Couple 2[305,32] (305,32) = (17, 62)
+#Couple 3[490,154] (490,154) = (69, 44)
+#Couple 4[90,281] (90,281) = (63, 34)
+#Couple 5[75,70] (75,70) = (65, 36)
+#Couple 6[41,333] (41,333) = (12, 17)
+#Couple 7[259,38] (259,38) = (51, 36)
+#Couple 8[42,413] (42,413) = (10, 23)
+#Couple 9[16,361] (16,361) = (13, 9)
+#Couple 10[357,382] (357,382) = (38, 2)
+#Couple 11[480,231] (480,231) = (22, 50)
+#Programs:
+#Program 0 = [ 121 106 389 228 59 483 ] (6) Spare Capacity = 1
+#Program 1 = [ 475 27 378 318 289 ] (5) Spare Capacity = 0
+#Program 2 = [ 382 377 44 277 37 356 83 63 ] (8) Spare Capacity = 0
+#Program 3 = [ 379 108 294 376 316 469 ] (6) Spare Capacity = 0
+#Program 4 = [ 128 434 396 290 367 165 445 473 227 ] (9) Spare Capacity = 0
+#Program 5 = [ 352 406 77 ] (3) Spare Capacity = 4
+#Program 6 = [ 29 327 341 423 124 ] (5) Spare Capacity = 0
+#Program 7 = [ 194 395 303 221 424 216 166 111 ] (8) Spare Capacity = 0
+#Program 8 = [ 226 401 465 301 233 86 ] (6) Spare Capacity = 0
+#Program 9 = [ 361 255 360 263 238 300 250 283 384 ] (9) Spare Capacity = 0
+#Program 10 = [ 14 92 457 325 239 181 76 42 ] (8) Spare Capacity = 0
+#Program 11 = [ 94 125 167 222 366 282 ] (6) Spare Capacity = 1
+#Program 12 = [ 20 470 375 359 202 122 41 109 269 ] (9) Spare Capacity = 0
+#Program 13 = [ 461 497 224 336 16 ] (5) Spare Capacity = 4
+#Program 14 = [ 287 315 185 11 119 43 ] (6) Spare Capacity = 0
+#Program 15 = [ 350 144 126 219 240 2 397 40 7 ] (9) Spare Capacity = 0
+#Program 16 = [ 200 343 425 467 203 193 253 292 ] (8) Spare Capacity = 0
+#Program 17 = [ 333 87 404 256 244 65 262 305 ] (8) Spare Capacity = 0
+#Program 18 = [ 191 409 304 312 189 1 170 ] (7) Spare Capacity = 0
+#Program 19 = [ 161 386 149 0 143 150 471 ] (7) Spare Capacity = 2
+#Program 20 = [ 419 296 66 429 268 131 36 105 17 ] (9) Spare Capacity = 0
+#Program 21 = [ 372 135 67 10 368 335 261 271 ] (8) Spare Capacity = 0
+#Program 22 = [ 411 480 463 217 198 172 35 53 ] (8) Spare Capacity = 0
+#Program 23 = [ 173 418 413 347 141 104 ] (6) Spare Capacity = 0
+#Program 24 = [ 484 171 107 345 280 ] (5) Spare Capacity = 2
+#Program 25 = [ 362 51 49 486 285 309 25 383 ] (8) Spare Capacity = 0
+#Program 26 = [ 162 427 22 426 495 487 164 168 ] (8) Spare Capacity = 0
+#Program 27 = [ 15 110 140 393 58 210 145 ] (7) Spare Capacity = 2
+#Program 28 = [ 18 374 344 443 46 370 441 115 491 ] (9) Spare Capacity = 0
+#Program 29 = [ 79 417 100 47 313 322 ] (6) Spare Capacity = 2
+#Program 30 = [ 146 174 286 481 324 453 306 82 ] (8) Spare Capacity = 0
+#Program 31 = [ 28 212 12 60 349 31 ] (6) Spare Capacity = 0
+#Program 32 = [ 254 272 455 127 78 ] (5) Spare Capacity = 0
+#Program 33 = [ 74 62 57 371 214 402 458 ] (7) Spare Capacity = 2
+#Program 34 = [ 89 267 459 84 320 68 243 435 281 ] (9) Spare Capacity = 0
+#Program 35 = [ 479 351 298 387 340 252 472 80 432 ] (9) Spare Capacity = 0
+#Program 36 = [ 197 260 70 436 399 38 297 ] (7) Spare Capacity = 0
+#Program 37 = [ 274 24 337 112 163 ] (5) Spare Capacity = 1
+#Program 38 = [ 236 357 414 159 56 148 319 ] (7) Spare Capacity = 0
+#Program 39 = [ 430 437 299 346 488 136 489 ] (7) Spare Capacity = 0
+#Program 40 = [ 468 85 158 284 232 451 23 ] (7) Spare Capacity = 0
+#Program 41 = [ 392 246 390 211 160 157 48 498 353 ] (9) Spare Capacity = 0
+#Program 42 = [ 447 460 96 64 6 247 117 169 266 ] (9) Spare Capacity = 0
+#Program 43 = [ 26 34 257 276 492 422 98 ] (7) Spare Capacity = 0
+#Program 44 = [ 9 321 72 154 178 138 439 ] (7) Spare Capacity = 0
+#Program 45 = [ 183 442 91 438 288 69 264 476 ] (8) Spare Capacity = 0
+#Program 46 = [ 249 176 133 142 326 61 229 120 ] (8) Spare Capacity = 0
+#Program 47 = [ 338 446 177 433 448 101 310 ] (7) Spare Capacity = 2
+#Program 48 = [ 410 184 452 291 223 317 ] (6) Spare Capacity = 0
+#Program 49 = [ 45 242 477 485 394 ] (5) Spare Capacity = 0
+#Program 50 = [ 73 231 116 400 147 152 ] (6) Spare Capacity = 0
+#Program 51 = [ 494 259 293 55 188 ] (5) Spare Capacity = 0
+#Program 52 = [ 334 462 39 30 354 95 482 196 ] (8) Spare Capacity = 0
+#Program 53 = [ 385 225 464 118 114 137 332 130 81 ] (9) Spare Capacity = 0
+#Program 54 = [ 50 466 328 235 408 ] (5) Spare Capacity = 0
+#Program 55 = [ 331 245 205 314 307 420 13 ] (7) Spare Capacity = 0
+#Program 56 = [ 323 308 33 428 380 139 265 156 ] (8) Spare Capacity = 1
+#Program 57 = [ 218 415 456 208 19 102 ] (6) Spare Capacity = 0
+#Program 58 = [ 99 187 440 204 416 ] (5) Spare Capacity = 0
+#Program 59 = [ 369 388 52 71 407 ] (5) Spare Capacity = 0
+#Program 60 = [ 329 215 273 358 391 339 182 ] (7) Spare Capacity = 0
+#Program 61 = [ 403 93 348 5 201 270 342 151 ] (8) Spare Capacity = 0
+#Program 62 = [ 454 405 493 32 398 153 ] (6) Spare Capacity = 0
+#Program 63 = [ 175 103 192 279 97 180 496 134 90 ] (9) Spare Capacity = 0
+#Program 64 = [ 381 450 474 213 54 278 ] (6) Spare Capacity = 0
+#Program 65 = [ 251 499 241 365 363 186 75 132 190 ] (9) Spare Capacity = 0
+#Program 66 = [ 449 195 302 8 230 207 373 220 4 ] (9) Spare Capacity = 0
+#Program 67 = [ 21 412 209 330 199 364 ] (6) Spare Capacity = 1
+#Program 68 = [ 155 295 421 444 311 179 ] (6) Spare Capacity = 1
+#Program 69 = [ 206 113 248 490 234 237 258 3 431 ] (9) Spare Capacity = 0
+#Program 70 = [ 88 275 478 123 355 129 ] (6) Spare Capacity = 0
+
+m 1
+r 0 19
+r 1 18
+r 2 15
+r 3 69
+r 4 66
+r 5 61
+r 6 42
+r 7 15
+r 8 66
+r 9 44
+r 10 21
+r 11 14
+r 12 31
+r 13 55
+r 14 10
+r 15 27
+r 16 13
+r 17 20
+r 18 28
+r 19 57
+r 20 12
+r 21 67
+r 22 26
+r 23 40
+r 24 37
+r 25 25
+r 26 43
+r 27 1
+r 28 31
+r 29 6
+r 30 52
+r 31 31
+r 32 62
+r 33 56
+r 34 43
+r 35 22
+r 36 20
+r 37 2
+r 38 36
+r 39 52
+r 40 15
+r 41 12
+r 42 10
+r 43 14
+r 44 2
+r 45 49
+r 46 28
+r 47 29
+r 48 41
+r 49 25
+r 50 54
+r 51 25
+r 52 59
+r 53 22
+r 54 64
+r 55 51
+r 56 38
+r 57 33
+r 58 27
+r 59 0
+r 60 31
+r 61 46
+r 62 33
+r 63 2
+r 64 42
+r 65 17
+r 66 20
+r 67 21
+r 68 34
+r 69 45
+r 70 36
+r 71 59
+r 72 44
+r 73 50
+r 74 33
+r 75 65
+r 76 10
+r 77 5
+r 78 32
+r 79 29
+r 80 35
+r 81 53
+r 82 30
+r 83 2
+r 84 34
+r 85 40
+r 86 8
+r 87 17
+r 88 70
+r 89 34
+r 90 63
+r 91 45
+r 92 10
+r 93 61
+r 94 11
+r 95 52
+r 96 42
+r 97 63
+r 98 43
+r 99 58
+r 100 29
+r 101 47
+r 102 57
+r 103 63
+r 104 23
+r 105 20
+r 106 0
+r 107 24
+r 108 3
+r 109 12
+r 110 27
+r 111 7
+r 112 37
+r 113 69
+r 114 53
+r 115 28
+r 116 50
+r 117 42
+r 118 53
+r 119 14
+r 120 46
+r 121 0
+r 122 12
+r 123 70
+r 124 6
+r 125 11
+r 126 15
+r 127 32
+r 128 4
+r 129 70
+r 130 53
+r 131 20
+r 132 65
+r 133 46
+r 134 63
+r 135 21
+r 136 39
+r 137 53
+r 138 44
+r 139 56
+r 140 27
+r 141 23
+r 142 46
+r 143 19
+r 144 15
+r 145 27
+r 146 30
+r 147 50
+r 148 38
+r 149 19
+r 150 19
+r 151 61
+r 152 50
+r 153 62
+r 154 44
+r 155 68
+r 156 56
+r 157 41
+r 158 40
+r 159 38
+r 160 41
+r 161 19
+r 162 26
+r 163 37
+r 164 26
+r 165 4
+r 166 7
+r 167 11
+r 168 26
+r 169 42
+r 170 18
+r 171 24
+r 172 22
+r 173 23
+r 174 30
+r 175 63
+r 176 46
+r 177 47
+r 178 44
+r 179 68
+r 180 63
+r 181 10
+r 182 60
+r 183 45
+r 184 48
+r 185 14
+r 186 65
+r 187 58
+r 188 51
+r 189 18
+r 190 65
+r 191 18
+r 192 63
+r 193 16
+r 194 7
+r 195 66
+r 196 52
+r 197 36
+r 198 22
+r 199 67
+r 200 16
+r 201 61
+r 202 12
+r 203 16
+r 204 58
+r 205 55
+r 206 69
+r 207 66
+r 208 57
+r 209 67
+r 210 27
+r 211 41
+r 212 31
+r 213 64
+r 214 33
+r 215 60
+r 216 7
+r 217 22
+r 218 57
+r 219 15
+r 220 66
+r 221 7
+r 222 11
+r 223 48
+r 224 13
+r 225 53
+r 226 8
+r 227 4
+r 228 0
+r 229 46
+r 230 66
+r 231 50
+r 232 40
+r 233 8
+r 234 69
+r 235 54
+r 236 38
+r 237 69
+r 238 9
+r 239 10
+r 240 15
+r 241 65
+r 242 49
+r 243 34
+r 244 17
+r 245 55
+r 246 41
+r 247 42
+r 248 69
+r 249 46
+r 250 9
+r 251 65
+r 252 35
+r 253 16
+r 254 32
+r 255 9
+r 256 17
+r 257 43
+r 258 69
+r 259 51
+r 260 36
+r 261 21
+r 262 17
+r 263 9
+r 264 45
+r 265 56
+r 266 42
+r 267 34
+r 268 20
+r 269 12
+r 270 61
+r 271 21
+r 272 32
+r 273 60
+r 274 37
+r 275 70
+r 276 43
+r 277 2
+r 278 64
+r 279 63
+r 280 24
+r 281 34
+r 282 11
+r 283 9
+r 284 40
+r 285 25
+r 286 30
+r 287 14
+r 288 45
+r 289 1
+r 290 4
+r 291 48
+r 292 16
+r 293 51
+r 294 3
+r 295 68
+r 296 20
+r 297 36
+r 298 35
+r 299 39
+r 300 9
+r 301 8
+r 302 66
+r 303 7
+r 304 18
+r 305 17
+r 306 30
+r 307 55
+r 308 56
+r 309 25
+r 310 47
+r 311 68
+r 312 18
+r 313 29
+r 314 55
+r 315 14
+r 316 3
+r 317 48
+r 318 1
+r 319 38
+r 320 34
+r 321 44
+r 322 29
+r 323 56
+r 324 30
+r 325 10
+r 326 46
+r 327 6
+r 328 54
+r 329 60
+r 330 67
+r 331 55
+r 332 53
+r 333 17
+r 334 52
+r 335 21
+r 336 13
+r 337 37
+r 338 47
+r 339 60
+r 340 35
+r 341 6
+r 342 61
+r 343 16
+r 344 28
+r 345 24
+r 346 39
+r 347 23
+r 348 61
+r 349 31
+r 350 15
+r 351 35
+r 352 5
+r 353 41
+r 354 52
+r 355 70
+r 356 2
+r 357 38
+r 358 60
+r 359 12
+r 360 9
+r 361 9
+r 362 25
+r 363 65
+r 364 67
+r 365 65
+r 366 11
+r 367 4
+r 368 21
+r 369 59
+r 370 28
+r 371 33
+r 372 21
+r 373 66
+r 374 28
+r 375 12
+r 376 3
+r 377 2
+r 378 1
+r 379 3
+r 380 56
+r 381 64
+r 382 2
+r 383 25
+r 384 9
+r 385 53
+r 386 19
+r 387 35
+r 388 59
+r 389 0
+r 390 41
+r 391 60
+r 392 41
+r 393 27
+r 394 49
+r 395 7
+r 396 4
+r 397 15
+r 398 62
+r 399 36
+r 400 50
+r 401 8
+r 402 33
+r 403 61
+r 404 17
+r 405 62
+r 406 5
+r 407 59
+r 408 54
+r 409 18
+r 410 48
+r 411 22
+r 412 67
+r 413 23
+r 414 38
+r 415 57
+r 416 58
+r 417 29
+r 418 23
+r 419 20
+r 420 55
+r 421 68
+r 422 43
+r 423 6
+r 424 7
+r 425 16
+r 426 26
+r 427 26
+r 428 56
+r 429 20
+r 430 39
+r 431 69
+r 432 35
+r 433 47
+r 434 4
+r 435 34
+r 436 36
+r 437 39
+r 438 45
+r 439 44
+r 440 58
+r 441 28
+r 442 45
+r 443 28
+r 444 68
+r 445 4
+r 446 47
+r 447 42
+r 448 47
+r 449 66
+r 450 64
+r 451 40
+r 452 48
+r 453 30
+r 454 62
+r 455 32
+r 456 57
+r 457 10
+r 458 33
+r 459 34
+r 460 42
+r 461 13
+r 462 52
+r 463 22
+r 464 53
+r 465 8
+r 466 54
+r 467 16
+r 468 40
+r 469 3
+r 470 12
+r 471 19
+r 472 35
+r 473 4
+r 474 64
+r 475 1
+r 476 45
+r 477 49
+r 478 70
+r 479 35
+r 480 22
+r 481 30
+r 482 52
+r 483 0
+r 484 24
+r 485 49
+r 486 25
+r 487 26
+r 488 39
+r 489 39
+r 490 69
+r 491 28
+r 492 43
+r 493 62
+r 494 51
+r 495 26
+r 496 63
+r 497 13
+r 498 41
+r 499 65

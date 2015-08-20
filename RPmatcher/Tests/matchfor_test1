@@ -1,0 +1,30 @@
+#Final Match:
+#Single Residents:
+#Resident 0 = 0
+#Resident 1 = 1
+#Resident 2 = 2
+#Resident 3 = 3
+#Resident 4 = 4
+#Resident 5 = 5
+#Resident 6 = 6
+#Resident 7 = 7
+#Couples:
+#Programs:
+#Program 0 = [ 0 ] (1)
+#Program 1 = [ 1 ] (1)
+#Program 2 = [ 2 ] (1)
+#Program 3 = [ 3 ] (1)
+#Program 4 = [ 4 ] (1)
+#Program 5 = [ 5 ] (1)
+#Program 6 = [ 6 ] (1)
+#Program 7 = [ 7 ] (1)
+
+m 1
+r 0 0
+r 1 1
+r 2 2
+r 3 3
+r 4 4
+r 5 5
+r 6 6
+r 7 7
