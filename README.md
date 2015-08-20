@@ -3,6 +3,8 @@ Stable Matching Suite: Tools for Solving Generalized Stable Matching Problems
 
 Authors: Fahiem Bacchus, Joanna Drummond, Andrew Perrault
 
+Related Paper: http://ijcai.org/papers15/Papers/IJCAI15-079.pdf
+
 Contents:
 
 1. smp_c.py: formulate a Stable Matching with Couples problem as a satisfiability problem (SAT) or as a mixed-integer program (MIP).
