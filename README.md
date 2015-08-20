@@ -17,13 +17,13 @@ Input format for Stable Matching with Couples instances:
 
 Each resident, couple and program has a unique id. The file consists of three sections.
 1. The first section describes residents and each line has the form:  
-r rid pid0 pid1 ...
+r rid pid0 pid1 ...  
 where rid is the resident's unique identifier and [pid0, pid1, ...] is the resident's ranking of programs.  
 2. The second section describes couples. Each line has the form:  
-c cid rid0 rid1 pid0a pid0b pid1a pid1b
+c cid rid0 rid1 pid0a pid0b pid1a pid1b  
 where cid is the couple's unique identifier, rid0 and rid1 and the residents in the couple and [(pid0a, pid0b), (pid1a, pid1b), ...] is the couple's ranking of programs.  
 3. The third section describes programs. Each line has the form:  
-p pid cap rid0 rid1 ...
+p pid cap rid0 rid1 ...  
 where pid is the program's unique identifier, cap is the program's capacity and [rid0, rid1, ...] is the program's ranking of residents.
 
 Output format for matchings:
