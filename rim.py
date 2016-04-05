@@ -106,3 +106,18 @@ def riffle_sample(ranking1, ranking2, sigma, debug=False):
             continue
         sample.append(r2copy.pop())
     return sample
+
+
+def plackett_luce_sample(parameters, ranking_length):
+    ranking = []
+    parameters = parameters / numpy.sum(parameters)
+    assert(ranking_length <= len(parameters))
+    while len(ranking) < ranking_length:
+        sampled = numpy.nonzero(numpy.random.multinomial(n=1, pvals=parameters))[0][0]
+        ranking.append(sampled)
+        sampled_prob = parameters[sampled]
+        parameters[sampled] = 0.
+        if numpy.sum(parameters) == 0.:
+            continue
+        parameters = parameters / (1 - sampled_prob)
+    return ranking

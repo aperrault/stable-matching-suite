@@ -110,7 +110,8 @@ class ListPreferenceFunction(PreferenceFunction):
             if agent == uid:
                 return preferred
             preferred.append(agent)
-        raise Exception('uid not in preference list: %r; internal_list; %r' % (uid, self.internal_list))
+        raise Exception('uid not in preference list: %r; internal_list; %r'
+                        % (uid, self.internal_list))
 
     def get_all_dispreferred(self, uid):
         dispreferred = []
@@ -171,7 +172,7 @@ class ListJointPreferenceFunction(JointPreferenceFunction):
             if a == assignment:
                 return dispreferred
             if self._check_suitability(assignment=assignment,
-                to_test=a, indices=indices):
+                                       to_test=a, indices=indices):
                 dispreferred.append(a)
         raise Exception('uid not in preference list')
 
@@ -182,7 +183,7 @@ class ListJointPreferenceFunction(JointPreferenceFunction):
                 weakly_preferred.append(a)
                 return weakly_preferred
             if self._check_suitability(assignment=assignment,
-                to_test=a, indices=indices):
+                                       to_test=a, indices=indices):
                 weakly_preferred.append(a)
         raise Exception('uid not in preference list')
 
@@ -233,7 +234,7 @@ class JointPreferrer(Agent):
         assert isinstance(self.preference_function, JointPreferenceFunction)
         self.residents = residents
         assert (len(self.residents)
-            == self.preference_function.get_cardinality())
+                == self.preference_function.get_cardinality())
 
     def get_all_preferred(self, assignment, indices):
         assert len(indices) <= self.size
@@ -260,7 +261,8 @@ class JointPreferrer(Agent):
 class Hospital(SinglePreferrer):
     def __init__(self, preference_function, uid, capacity=None):
         SinglePreferrer.__init__(self,
-            preference_function=preference_function, uid=uid)
+                                 preference_function=preference_function,
+                                 uid=uid)
         self.capacity = capacity
         if self.capacity is not None:
             assert isinstance(self.capacity, int)
@@ -269,8 +271,7 @@ class Hospital(SinglePreferrer):
 
 class NilHospital(Hospital):
     def __init__(self):
-        Hospital.__init__(self,
-            preference_function=None, uid=NIL_HOSPITAL_UID)
+        Hospital.__init__(self, preference_function=None, uid=NIL_HOSPITAL_UID)
         self.capacity = 10
         if self.capacity is not None:
             assert isinstance(self.capacity, int)
@@ -285,17 +286,16 @@ class NilHospital(Hospital):
 
 class Resident(SinglePreferrer):
     def __init__(self, uid, preference_function=None, couple=None):
-        SinglePreferrer.__init__(self,
-            preference_function=preference_function, uid=uid)
+        SinglePreferrer.__init__(self, preference_function=preference_function,
+                                 uid=uid)
         resident_dict[self.uid] = self
         self.couple = couple
 
 
 class Couple(JointPreferrer):
     def __init__(self, preference_function, uid, residents):
-        JointPreferrer.__init__(self,
-            preference_function=preference_function, uid=uid,
-            residents=residents)
+        JointPreferrer.__init__(self, preference_function=preference_function,
+                                uid=uid, residents=residents)
         self.residents = residents
         couple_dict[uid] = self
         for resident in self.residents:
@@ -398,7 +398,8 @@ class ProblemInstance():
 
     @classmethod
     def from_file(cls, filename, append_nil=False):
-        # does not check that all referred to programs and residents exist after problem is defined
+        # does not check that all referred to programs and residents exist
+        # after problem is defined
         # does check for duplicate residents and programs
         resident_dict = {}
         hospital_dict = {}
@@ -408,16 +409,20 @@ class ProblemInstance():
             singles = []
             couples = []
             for line in f:
-                if line.startswith('#') or line.startswith(' ') or line.startswith('\n') or line.startswith('\r'):
+                if (line.startswith('#') or line.startswith(' ')
+                        or line.startswith('\n') or line.startswith('\r')):
                     continue
                 items = line.strip().split()
                 if line.startswith('r'):
                     if int(items[1]) in resident_dict:
-                        raise Exception('duplicate resident: %d' % int(items[1]))
+                        raise Exception('duplicate resident: %d'
+                                        % int(items[1]))
                     rol = []
                     for i in xrange(2, len(items)):
                         rol.append(int(items[i]))
-                    ## APPENDING nil so that when loading the match in for comparison purposes, we have a rank spot for the nil hospital
+                    # APPENDING nil so that when loading the match in for
+                    # comparison purposes, we have a rank spot for
+                    # the nil hospital
                     if append_nil:
                         if rol[-1] == int(NIL_HOSPITAL_SYMBOL):
                             rol.pop()
@@ -425,32 +430,43 @@ class ProblemInstance():
                             rol.append(NIL_HOSPITAL_UID)
 
                     s = Resident(uid=int(items[1]),
-                        preference_function=ListPreferenceFunction(internal_list=rol))
+                                 preference_function=ListPreferenceFunction(
+                                 internal_list=rol))
                     singles.append(s)
                 elif line.startswith('p'):
                     if int(items[1]) in hospital_dict:
-                        raise Exception('duplicate program: %d' % int(items[1]))
+                        raise Exception(
+                            'duplicate program: %d' % int(items[1]))
                     rol = []
                     for i in xrange(3, len(items)):
                         rol.append(int(items[i]))
                     h = Hospital(uid=int(items[1]),
-                        preference_function=ListPreferenceFunction(internal_list=rol),
-                        capacity=int(items[2]))
+                                 preference_function=ListPreferenceFunction(
+                                 internal_list=rol), capacity=int(items[2]))
                     hospitals.append(h)
                 elif line.startswith('c'):
                     if int(items[1]) in couple_dict:
                         raise Exception('duplicate couple: %d' % int(items[1]))
                     if int(items[2]) in resident_dict:
-                        raise Exception('resident in couple %d already defined: %d' % (int(items[1]), int(items[2])))
+                        raise Exception(
+                            'resident in couple %d already defined: %d'
+                            % (int(items[1]), int(items[2])))
                     if int(items[3]) in resident_dict:
-                        raise Exception('resident in couple %d already defined: %d' % (int(items[1]), int(items[3])))
+                        raise Exception(
+                            'resident in couple %d already defined: %d'
+                            % (int(items[1]), int(items[3])))
                     rol = []
                     for i in xrange(4, len(items)):
                         if i % 2 != 0:
                             continue
-                        rol.append((int(items[i]) if items[i] != NIL_HOSPITAL_SYMBOL else NIL_HOSPITAL_UID, int(items[i + 1]) if items[i + 1] != NIL_HOSPITAL_SYMBOL else NIL_HOSPITAL_UID))
-
-                    ## APPENDING nil so that when loading the match in for comparison purposes, we have a rank spot for the nil hospital
+                        rol.append((int(items[i]) if items[i]
+                                   != NIL_HOSPITAL_SYMBOL else
+                                   NIL_HOSPITAL_UID, int(items[i + 1]) if
+                                   items[i + 1] != NIL_HOSPITAL_SYMBOL
+                                   else NIL_HOSPITAL_UID))
+                    # APPENDING nil so that when loading the match in for
+                    # comparison purposes, we have a rank spot for the
+                    # nil hospital
                     if append_nil:
                         if rol[-1] != (NIL_HOSPITAL_UID, NIL_HOSPITAL_UID):
                             rol.append((NIL_HOSPITAL_UID, NIL_HOSPITAL_UID))
@@ -458,8 +474,9 @@ class ProblemInstance():
                     r0 = Resident(uid=int(items[2]))
                     r1 = Resident(uid=int(items[3]))
                     c = Couple(uid=int(items[1]),
-                        preference_function=ListJointPreferenceFunction(internal_list=rol, cardinality=2),
-                        residents=[r0, r1])
+                               preference_function=ListJointPreferenceFunction(
+                                   internal_list=rol, cardinality=2),
+                               residents=[r0, r1])
                     couples.append(c)
                 else:
                     raise Exception('line not readable: %s' % line)
@@ -479,49 +496,68 @@ class ProblemInstance():
                 if matching[resident_uid] == NIL_HOSPITAL_UID:
                     f.write('r %d %s\n' % (resident_uid, NIL_HOSPITAL_SYMBOL))
                 else:
-                    f.write('r %d %d\n' % (resident_uid, matching[resident_uid]))
+                    f.write('r %d %d\n' % (resident_uid,
+                                           matching[resident_uid]))
 
-    def solve_mip(self, solver, verbose=False, verify_file=None, run_solver=True,
-                  problem_name='problem', output_filename=None):
+    def solve_mip(self, solver, verbose=False, verify_file=None,
+                  run_solver=True, problem_name='problem',
+                  output_filename=None):
         constraints = cplex_py.ConstraintsCollection()
         binaries = []
 
         def expand_match_var(resident, h, coeff=1.):
             if resident.couple is None:
-                return [cplex_py.CoeffVar(coeff=coeff, var='x_%d,%d' % (resident.uid, h.uid))]
+                return [cplex_py.CoeffVar(coeff=coeff, var='x_%d,%d' %
+                        (resident.uid, h.uid))]
             else:
                 if resident.couple.residents[0] == resident:
                     return [cplex_py.CoeffVar(coeff=coeff,
-                            var=('x_%d,%d,%d' % (resident.couple.uid, h_uid_pair[0], h_uid_pair[1])))
-                        for h_uid_pair in filter(
-                            lambda x: x[0] == h.uid, resident.couple.get_ordering())]
+                            var=('x_%d,%d,%d' % (resident.couple.uid,
+                                                 h_uid_pair[0],
+                                                 h_uid_pair[1])))
+                            for h_uid_pair in filter(
+                                lambda x: x[0] == h.uid,
+                                resident.couple.get_ordering())]
                 else:
                     return [cplex_py.CoeffVar(coeff=coeff,
-                            var=('x_%d,%d,%d' % (resident.couple.uid, h_uid_pair[0], h_uid_pair[1])))
-                        for h_uid_pair in filter(
-                            lambda x: x[1] == h.uid, resident.couple.get_ordering())]
+                            var=('x_%d,%d,%d' % (resident.couple.uid,
+                                                 h_uid_pair[0],
+                                                 h_uid_pair[1])))
+                            for h_uid_pair in filter(
+                                lambda x: x[1] == h.uid,
+                                resident.couple.get_ordering())]
 
         # matching constraints
         for resident in self.singles:
             constraints.add_constraint(cplex_py.EqualityConstraint(
-                var_side=cplex_py.Expression([cplex_py.CoeffVar(var='x_%d,%d' % (resident.uid, h_uid))
-                    for h_uid in (resident.get_ordering() + [NIL_HOSPITAL_UID])]),
+                var_side=cplex_py.Expression(
+                    [cplex_py.CoeffVar(var='x_%d,%d' % (resident.uid, h_uid))
+                     for h_uid in (resident.get_ordering()
+                     + [NIL_HOSPITAL_UID])]),
                 const_side=cplex_py.CoeffVar(1.)))
-            binaries.extend(['x_%d,%d' % (resident.uid, h_uid) for h_uid in (resident.get_ordering() + [NIL_HOSPITAL_UID])])
+            binaries.extend(['x_%d,%d' % (resident.uid, h_uid) for h_uid in (
+                resident.get_ordering() + [NIL_HOSPITAL_UID])])
         for couple in self.couples:
             constraints.add_constraint(cplex_py.EqualityConstraint(
-                var_side=cplex_py.Expression([cplex_py.CoeffVar(var='x_%d,%d,%d' % (couple.uid, h_uid_pair[0], h_uid_pair[1]))
-                    for h_uid_pair in (couple.get_ordering() + [(NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)])]),
+                var_side=cplex_py.Expression([cplex_py.CoeffVar(
+                    var='x_%d,%d,%d' % (couple.uid, h_uid_pair[0],
+                                        h_uid_pair[1]))
+                    for h_uid_pair in (couple.get_ordering() + [
+                        (NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)])]),
                 const_side=cplex_py.CoeffVar(1.)))
-            binaries.extend(['x_%d,%d,%d' % (couple.uid, h_uid_pair[0], h_uid_pair[1])
-                    for h_uid_pair in (couple.get_ordering() + [(NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)])])
+            binaries.extend(['x_%d,%d,%d' % (couple.uid, h_uid_pair[0],
+                                             h_uid_pair[1])
+                            for h_uid_pair in (couple.get_ordering() + [
+                                (NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)])])
         for h in self.hospitals:
             var_side = []
             if len(h.get_ordering()) > 0:
                 for resident_uid in h.get_ordering():
-                    var_side.extend(expand_match_var(resident_dict[resident_uid], h))
+                    var_side.extend(expand_match_var(
+                        resident_dict[resident_uid], h))
                 constraints.add_constraint(cplex_py.InequalityConstraint(
-                    var_side=cplex_py.Expression(var_side), const_side=cplex_py.CoeffVar(h.capacity)))
+                    var_side=cplex_py.Expression(var_side),
+                    const_side=cplex_py.CoeffVar(h.capacity)))
         # stability constraints
         # singles
         for r in self.singles:
@@ -530,11 +566,13 @@ class ProblemInstance():
                 h = hospital_dict[h_uid]
                 var_side = []
                 for r_prime in h.get_all_weakly_preferred(r.uid):
-                    var_side.extend(expand_match_var(resident_dict[r_prime], h, coeff=-1.))
+                    var_side.extend(expand_match_var(resident_dict[r_prime],
+                                    h, coeff=-1.))
                 constraints.add_constraint(cplex_py.InequalityConstraint(
                     var_side=cplex_py.Expression(var_side + [
                         cplex_py.CoeffVar(coeff=-h.capacity,
-                            var='x_%d,%d' % (r.uid, p_prime_uid)) for p_prime_uid in r.get_all_weakly_preferred(h.uid)]),
+                                          var='x_%d,%d' % (r.uid, p_prime_uid))
+                        for p_prime_uid in r.get_all_weakly_preferred(h.uid)]),
                     const_side=cplex_py.CoeffVar(-h.capacity)))
         # one member of a couple
         for couple in self.couples:
@@ -547,80 +585,131 @@ class ProblemInstance():
                 if not h0 == h1:
                     var_side = []
                     for r_prime in h0.get_all_weakly_preferred(r0.uid):
-                        var_side.extend(expand_match_var(resident_dict[r_prime], h0, coeff=-1.))
+                        var_side.extend(expand_match_var(
+                            resident_dict[r_prime], h0, coeff=-1.))
                     constraints.add_constraint(cplex_py.InequalityConstraint(
-                        var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-h0.capacity,
-                                    var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                   for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                  + var_side
-                                  + expand_match_var(r1, h1, coeff=h0.capacity)),
+                        var_side=cplex_py.Expression([cplex_py.CoeffVar(
+                            coeff=-h0.capacity,
+                            var='x_%d,%d,%d' % (
+                                couple.uid, h_prime_pair[0], h_prime_pair[1]))
+                            for h_prime_pair in
+                            couple.get_all_weakly_preferred((h0.uid, h1.uid),
+                                                            [])]
+                            + var_side + expand_match_var(r1, h1,
+                                                          coeff=h0.capacity)),
                         const_side=cplex_py.CoeffVar(0.)))
                     var_side = []
                     for r_prime in h1.get_all_weakly_preferred(r1.uid):
-                        var_side.extend(expand_match_var(resident_dict[r_prime], h1, coeff=-1.))
+                        var_side.extend(expand_match_var(
+                            resident_dict[r_prime], h1, coeff=-1.))
                     constraints.add_constraint(cplex_py.InequalityConstraint(
-                        var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-h1.capacity,
-                                    var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                   for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                  + var_side
-                                  + expand_match_var(r0, h0, coeff=h1.capacity)),
+                        var_side=cplex_py.Expression([cplex_py.CoeffVar(
+                            coeff=-h1.capacity,
+                            var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0],
+                                                h_prime_pair[1]))
+                            for h_prime_pair in
+                            couple.get_all_weakly_preferred((h0.uid, h1.uid),
+                                                            [])]
+                            + var_side + expand_match_var(r0, h0,
+                                                          coeff=h1.capacity)),
                         const_side=cplex_py.CoeffVar(0.)))
                 else:
-                    if h0.get_rank(r0.uid) < h0.get_rank(r1.uid):  # r0 preferred to r1
+                    if h0.get_rank(r0.uid) < h0.get_rank(r1.uid):
+                        # r0 preferred to r1
                         var_side = []
                         for r_prime in h1.get_all_weakly_preferred(r1.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h1, coeff=-1.))
-                        constraints.add_constraint(cplex_py.InequalityConstraint(
-                            var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-h0.capacity,
-                                        var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                       for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                      + var_side
-                                      + expand_match_var(r1, h1, coeff=h0.capacity)),
-                            const_side=cplex_py.CoeffVar(0.)))
-                        constraints.add_constraint(cplex_py.InequalityConstraint(
-                            var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-h1.capacity,
-                                        var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                       for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                      + var_side
-                                      + expand_match_var(r0, h0, coeff=h1.capacity)),
-                            const_side=cplex_py.CoeffVar(0.)))
+                            var_side.extend(expand_match_var(
+                                resident_dict[r_prime], h1, coeff=-1.))
+                        constraints.add_constraint(
+                            cplex_py.InequalityConstraint(
+                                var_side=cplex_py.Expression(
+                                    [cplex_py.CoeffVar(
+                                     coeff=-h0.capacity,
+                                     var='x_%d,%d,%d' % (couple.uid,
+                                                         h_prime_pair[0],
+                                                         h_prime_pair[1]))
+                                        for h_prime_pair in
+                                        couple.get_all_weakly_preferred(
+                                            (h0.uid, h1.uid), [])]
+                                    + var_side + expand_match_var(
+                                        r1, h1,
+                                        coeff=h0.capacity)),
+                                const_side=cplex_py.CoeffVar(0.)))
+                        constraints.add_constraint(
+                            cplex_py.InequalityConstraint(
+                                var_side=cplex_py.Expression(
+                                    [cplex_py.CoeffVar(coeff=-h1.capacity,
+                                     var='x_%d,%d,%d' % (couple.uid,
+                                                         h_prime_pair[0],
+                                                         h_prime_pair[1]))
+                                     for h_prime_pair in
+                                     couple.get_all_weakly_preferred((h0.uid,
+                                                                      h1.uid),
+                                                                     [])]
+                                    + var_side
+                                    + expand_match_var(r0, h0,
+                                                       coeff=h1.capacity)),
+                                const_side=cplex_py.CoeffVar(0.)))
                     else:
                         var_side = []
                         for r_prime in h0.get_all_weakly_preferred(r0.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h0, coeff=-1.))
-                        constraints.add_constraint(cplex_py.InequalityConstraint(
-                            var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-h0.capacity,
-                                        var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                       for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                      + var_side
-                                      + expand_match_var(r1, h1, coeff=h0.capacity)),
-                            const_side=cplex_py.CoeffVar(0.)))
-                        constraints.add_constraint(cplex_py.InequalityConstraint(
-                            var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-h1.capacity,
-                                        var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                       for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                      + var_side
-                                      + expand_match_var(r0, h0, coeff=h1.capacity)),
-                            const_side=cplex_py.CoeffVar(0.)))
+                            var_side.extend(expand_match_var(
+                                resident_dict[r_prime], h0, coeff=-1.))
+                        constraints.add_constraint(
+                            cplex_py.InequalityConstraint(
+                                var_side=cplex_py.Expression(
+                                    [cplex_py.CoeffVar(coeff=-h0.capacity,
+                                     var='x_%d,%d,%d' % (couple.uid,
+                                                         h_prime_pair[0],
+                                                         h_prime_pair[1]))
+                                     for h_prime_pair in
+                                     couple.get_all_weakly_preferred((h0.uid,
+                                                                      h1.uid),
+                                                                     [])]
+                                    + var_side + expand_match_var(
+                                        r1, h1, coeff=h0.capacity)),
+                                const_side=cplex_py.CoeffVar(0.)))
+                        constraints.add_constraint(
+                            cplex_py.InequalityConstraint(
+                                var_side=cplex_py.Expression(
+                                    [cplex_py.CoeffVar(coeff=-h1.capacity,
+                                     var='x_%d,%d,%d' % (couple.uid,
+                                                         h_prime_pair[0],
+                                                         h_prime_pair[1]))
+                                     for h_prime_pair in
+                                     couple.get_all_weakly_preferred((h0.uid,
+                                                                      h1.uid),
+                                                                     [])]
+                                    + var_side
+                                    + expand_match_var(r0, h0,
+                                                       coeff=h1.capacity)),
+                                const_side=cplex_py.CoeffVar(0.)))
             # also consider switch to (nil, nil)
             constraints.add_constraint(cplex_py.InequalityConstraint(
-                var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-1.,
-                            var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                           for h_prime_pair in couple.get_ordering() + [(NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)]]
-                          + expand_match_var(r1, NIL_HOSPITAL, coeff=1.)),
+                var_side=cplex_py.Expression(
+                    [cplex_py.CoeffVar(coeff=-1.,
+                     var='x_%d,%d,%d' % (couple.uid,
+                                         h_prime_pair[0],
+                                         h_prime_pair[1]))
+                     for h_prime_pair in couple.get_ordering() +
+                     [(NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)]]
+                    + expand_match_var(r1, NIL_HOSPITAL, coeff=1.)),
                 const_side=cplex_py.CoeffVar(0.)))
             constraints.add_constraint(cplex_py.InequalityConstraint(
-                var_side=cplex_py.Expression([cplex_py.CoeffVar(coeff=-1.,
-                            var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                           for h_prime_pair in couple.get_ordering() + [(NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)]]
-                          + expand_match_var(r0, NIL_HOSPITAL, coeff=1.)),
+                var_side=cplex_py.Expression(
+                    [cplex_py.CoeffVar(coeff=-1., var='x_%d,%d,%d' %
+                     (couple.uid, h_prime_pair[0], h_prime_pair[1]))
+                     for h_prime_pair in couple.get_ordering() +
+                     [(NIL_HOSPITAL_UID, NIL_HOSPITAL_UID)]]
+                    + expand_match_var(r0, NIL_HOSPITAL, coeff=1.)),
                 const_side=cplex_py.CoeffVar(0.)))
         # both members of a couple switch
         for couple in self.couples:
             ordering = couple.get_ranked_hospitals()
             r0 = couple.residents[0]
             r1 = couple.residents[1]
-            # need to find all hospitals that are ranked by the 2nd member of a couple
+            # need to find all hospitals that are ranked by the
+            # 2nd member of a couple
             # note: could generate fewer alpha variables if intelligent
             generated_alphas = {}
             for (h0_uid, h1_uid) in ordering:
@@ -629,16 +718,21 @@ class ProblemInstance():
                 if (h0.capacity <= 1 or h0_uid == NIL_HOSPITAL_UID
                     or h1.capacity <= 1 or h1_uid == NIL_HOSPITAL_UID
                     or (r1.uid, h1_uid) in generated_alphas
-                    or (r0.uid, h0_uid) in generated_alphas):
+                        or (r0.uid, h0_uid) in generated_alphas):
                     continue
                 else:
                     binaries.append('alpha_%d,%d' % (r1.uid, h1_uid))
                     generated_alphas[(r1.uid, h1_uid)] = True
                     var_side = []
                     for r_prime in h1.get_all_weakly_preferred(r1.uid):
-                        var_side.extend(expand_match_var(resident_dict[r_prime], h1, coeff=-1.))
+                        var_side.extend(
+                            expand_match_var(resident_dict[r_prime], h1,
+                                             coeff=-1.))
                     constraints.add_constraint(cplex_py.InequalityConstraint(
-                        var_side=cplex_py.Expression(var_side + [cplex_py.CoeffVar(coeff=h1.capacity, var='alpha_%d,%d' % (r1.uid, h1.uid))]),
+                        var_side=cplex_py.Expression(var_side + [
+                            cplex_py.CoeffVar(coeff=h1.capacity,
+                                              var='alpha_%d,%d'
+                                              % (r1.uid, h1.uid))]),
                         const_side=cplex_py.CoeffVar(coeff=0.)))
             for number in xrange(len(ordering)):
                 h0 = hospital_dict[ordering[number][0]]
@@ -647,64 +741,98 @@ class ProblemInstance():
                     continue
                 if not h0 == h1:
                     var_side = []
-                    if h1.uid != NIL_HOSPITAL_UID and h1.capacity > 1 and h0.uid != NIL_HOSPITAL_UID and h0.capacity > 1:
+                    if (h1.uid != NIL_HOSPITAL_UID and h1.capacity > 1
+                        and h0.uid != NIL_HOSPITAL_UID
+                            and h0.capacity > 1):
                         for r_prime in h0.get_all_weakly_preferred(r0.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h0, coeff=-1.))
-                        constraints.add_constraint(cplex_py.InequalityConstraint(
-                            var_side=cplex_py.Expression(expand_match_var(r0, h0, -h0.capacity)
-                                      + expand_match_var(r1, h1, -h0.capacity)
-                                      + [cplex_py.CoeffVar(coeff=-h0.capacity,
-                                            var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                         for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                      + var_side
-                                      + [cplex_py.CoeffVar(coeff=-h0.capacity,
-                                            var='alpha_%d,%d' % (r1.uid, h1.uid))]),
-                            const_side=cplex_py.CoeffVar(-h0.capacity)))
+                            var_side.extend(expand_match_var(
+                                resident_dict[r_prime], h0, coeff=-1.))
+                        constraints.add_constraint(
+                            cplex_py.InequalityConstraint(
+                                var_side=cplex_py.Expression(
+                                    expand_match_var(r0, h0, -h0.capacity)
+                                    + expand_match_var(r1, h1, -h0.capacity)
+                                    + [cplex_py.CoeffVar(coeff=-h0.capacity,
+                                       var='x_%d,%d,%d' % (couple.uid,
+                                                           h_prime_pair[0],
+                                                           h_prime_pair[1]))
+                                       for h_prime_pair in
+                                       couple.get_all_weakly_preferred(
+                                           (h0.uid, h1.uid), [])]
+                                    + var_side
+                                    + [cplex_py.CoeffVar(coeff=-h0.capacity,
+                                       var='alpha_%d,%d' % (r1.uid, h1.uid))]),
+                                const_side=cplex_py.CoeffVar(-h0.capacity)))
                     elif h1.uid == NIL_HOSPITAL_UID or h1.capacity == 1:
                         for r_prime in h0.get_all_weakly_preferred(r0.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h0, coeff=-1.))
+                            var_side.extend(expand_match_var(
+                                resident_dict[r_prime], h0, coeff=-1.))
                         for r_prime in h1.get_all_weakly_preferred(r1.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h1, coeff=-h0.capacity))
-                        constraints.add_constraint(cplex_py.InequalityConstraint(
-                            var_side=cplex_py.Expression(expand_match_var(r0, h0, -h0.capacity)
-                                      + expand_match_var(r1, h1, -h0.capacity)
-                                      + [cplex_py.CoeffVar(coeff=-h0.capacity,
-                                            var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                         for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                      + var_side),
-                            const_side=cplex_py.CoeffVar(-h0.capacity)))
+                            var_side.extend(expand_match_var(
+                                resident_dict[r_prime],
+                                h1, coeff=-h0.capacity))
+                        constraints.add_constraint(
+                            cplex_py.InequalityConstraint(
+                                var_side=cplex_py.Expression(
+                                    expand_match_var(r0, h0, -h0.capacity)
+                                    + expand_match_var(r1, h1, -h0.capacity)
+                                    + [cplex_py.CoeffVar(coeff=-h0.capacity,
+                                       var='x_%d,%d,%d' % (couple.uid,
+                                                           h_prime_pair[0],
+                                                           h_prime_pair[1]))
+                                       for h_prime_pair in
+                                       couple.get_all_weakly_preferred(
+                                           (h0.uid, h1.uid), [])]
+                                    + var_side),
+                                const_side=cplex_py.CoeffVar(-h0.capacity)))
                     elif h0.uid == NIL_HOSPITAL_UID or h0.capacity == 1:
                         for r_prime in h1.get_all_weakly_preferred(r1.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h1, coeff=-1.))
+                            var_side.extend(expand_match_var(resident_dict[
+                                r_prime], h1, coeff=-1.))
                         for r_prime in h0.get_all_weakly_preferred(r0.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h0, coeff=-h1.capacity))
-                        constraints.add_constraint(cplex_py.InequalityConstraint(
-                            var_side=cplex_py.Expression(expand_match_var(r0, h0, -h1.capacity)
-                                      + expand_match_var(r1, h1, -h1.capacity)
-                                      + [cplex_py.CoeffVar(coeff=-h1.capacity,
-                                            var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                         for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                      + var_side),
-                            const_side=cplex_py.CoeffVar(-h1.capacity)))
+                            var_side.extend(expand_match_var(resident_dict[
+                                r_prime], h0, coeff=-h1.capacity))
+                        constraints.add_constraint(
+                            cplex_py.InequalityConstraint(
+                                var_side=cplex_py.Expression(
+                                    expand_match_var(r0, h0, -h1.capacity)
+                                    + expand_match_var(r1, h1, -h1.capacity)
+                                    + [cplex_py.CoeffVar(coeff=-h1.capacity,
+                                       var='x_%d,%d,%d' % (couple.uid,
+                                                           h_prime_pair[0],
+                                                           h_prime_pair[1]))
+                                       for h_prime_pair in
+                                       couple.get_all_weakly_preferred(
+                                           (h0.uid, h1.uid), [])]
+                                    + var_side),
+                                const_side=cplex_py.CoeffVar(-h1.capacity)))
                     else:
                         raise Exception('should never get here')
                 else:
                     if h0.capacity == 1:
                         continue
                     var_side = []
-                    if h0.get_rank(r0.uid) < h0.get_rank(r1.uid):  # r0 preferred to r1
+                    if h0.get_rank(r0.uid) < h0.get_rank(r1.uid):
+                        # r0 preferred to r1
                         for r_prime in h1.get_all_weakly_preferred(r1.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h1, coeff=-1.))
+                            var_side.extend(expand_match_var(
+                                resident_dict[r_prime], h1, coeff=-1.))
                     else:
                         for r_prime in h1.get_all_weakly_preferred(r0.uid):
-                            var_side.extend(expand_match_var(resident_dict[r_prime], h0, coeff=-1.))
+                            var_side.extend(expand_match_var(
+                                resident_dict[r_prime], h0, coeff=-1.))
                     constraints.add_constraint(cplex_py.InequalityConstraint(
-                        var_side=cplex_py.Expression(expand_match_var(r0, h0, -h0.capacity)
-                                  + expand_match_var(r1, h1, -h0.capacity)
-                                  + [cplex_py.CoeffVar(coeff=-h0.capacity,
-                                        var='x_%d,%d,%d' % (couple.uid, h_prime_pair[0], h_prime_pair[1]))
-                                     for h_prime_pair in couple.get_all_weakly_preferred((h0.uid, h1.uid), [])]
-                                  + var_side),
+                        var_side=cplex_py.Expression(
+                            expand_match_var(r0, h0, -h0.capacity)
+                            + expand_match_var(r1, h1, -h0.capacity)
+                            + [cplex_py.CoeffVar(coeff=-h0.capacity,
+                               var='x_%d,%d,%d' % (couple.uid,
+                                                   h_prime_pair[0],
+                                                   h_prime_pair[1]))
+                               for h_prime_pair in
+                               couple.get_all_weakly_preferred(
+                                   (h0.uid, h1.uid), [])]
+                            + var_side),
                         const_side=cplex_py.CoeffVar(-h0.capacity + 1)))
         if verify_file is not None:
             r_match_dict = {}
@@ -714,7 +842,8 @@ class ProblemInstance():
                 for line in f:
                     if line.startswith('r '):
                         s = line.split()
-                        h = hospital_dict[int(s[2])] if int(s[2]) != -1 else NIL_HOSPITAL
+                        h = (hospital_dict[int(s[2])]
+                             if int(s[2]) != -1 else NIL_HOSPITAL)
                         r = resident_dict[int(s[1])]
                         r_match_dict[r] = h
                         h_match_dict[h] = r
@@ -723,7 +852,8 @@ class ProblemInstance():
                 ordering = couple.get_ordering()
                 r0 = couple.residents[0]
                 r1 = couple.residents[1]
-                c_match_dict[couple] = (r_match_dict[couple.residents[0]], r_match_dict[couple.residents[1]])
+                c_match_dict[couple] = (r_match_dict[couple.residents[0]],
+                                        r_match_dict[couple.residents[1]])
 
             def eval_cplex_constraint(constraint):
                 if isinstance(constraint, cplex_py.InequalityConstraint):
@@ -735,11 +865,19 @@ class ProblemInstance():
                             s = var.var.split(',')
                             s[0] = s[0][2:]
                             if len(s) == 3:
-                                var_val = 1. if c_match_dict[couple_dict[int(s[0])]] == (hospital_dict[int(s[1])], hospital_dict[int(s[2])]) else 0.
+                                var_val = (1. if c_match_dict[
+                                    couple_dict[int(s[0])]]
+                                    == (hospital_dict[int(s[1])],
+                                        hospital_dict[int(s[2])]) else 0.)
                             else:
-                                var_val = 1. if r_match_dict[resident_dict[int(s[0])]] == hospital_dict[int(s[1])] else 0.
-                            total_left += var.coeff * var_val if var.coeff is not None else var_val
-                    return ((total_left <= constraint.const_side.coeff), total_left)
+                                var_val = (1. if r_match_dict[
+                                    resident_dict[int(s[0])]]
+                                    == hospital_dict[int(s[1])] else 0.)
+                            total_left += (var.coeff * var_val
+                                           if var.coeff is not None
+                                           else var_val)
+                    return ((total_left <= constraint.const_side.coeff),
+                            total_left)
                 if isinstance(constraint, cplex_py.EqualityConstraint):
                     total_left = 0
                     for var in constraint.var_side.terms_list:
@@ -749,11 +887,19 @@ class ProblemInstance():
                             s = var.var.split(',')
                             s[0] = s[0][2:]
                             if len(s) == 3:
-                                var_val = 1. if c_match_dict[couple_dict[int(s[0])]] == (hospital_dict[int(s[1])], hospital_dict[int(s[2])]) else 0.
+                                var_val = (1. if c_match_dict[
+                                    couple_dict[int(s[0])]] ==
+                                    (hospital_dict[int(s[1])],
+                                     hospital_dict[int(s[2])]) else 0.)
                             else:
-                                var_val = 1. if r_match_dict[resident_dict[int(s[0])]] == hospital_dict[int(s[1])] else 0.
-                            total_left += var.coeff * var_val if var.coeff is not None else var_val
-                    return ((total_left == constraint.const_side.coeff), total_left)
+                                var_val = (1. if r_match_dict[
+                                    resident_dict[int(s[0])]]
+                                    == hospital_dict[int(s[1])] else 0.)
+                            total_left += (var.coeff * var_val
+                                           if var.coeff is not None
+                                           else var_val)
+                    return ((total_left == constraint.const_side.coeff),
+                            total_left)
             for constraint in constraints.constraints:
                 if not eval_cplex_constraint(constraint)[0]:
                     print constraint.var_side
@@ -761,13 +907,21 @@ class ProblemInstance():
                     print eval_cplex_constraint(constraint)[1]
             return
         if run_solver:
-            (objective, vals) = cplex_py.solve_using_CPLEX(objective=cplex_py.Expression(terms_list=[cplex_py.CoeffVar(var=binaries[0])]),
-                constraints=constraints, binaries=binaries, maximize=True, clean_files=True, treememory=TREEMEM_LIM, run_solver=run_solver,
+            (objective, vals) = cplex_py.solve_using_CPLEX(
+                objective=cplex_py.Expression(
+                    terms_list=[cplex_py.CoeffVar(var=binaries[0])]),
+                constraints=constraints, binaries=binaries,
+                maximize=True, clean_files=True,
+                treememory=TREEMEM_LIM, run_solver=run_solver,
                 problem_name=problem_name, solver_path=solver)
         else:
-            (objective, vals) = cplex_py.solve_using_CPLEX(objective=cplex_py.Expression(terms_list=[cplex_py.CoeffVar(var=binaries[0])]),
-                constraints=constraints, binaries=binaries, maximize=True, clean_files=True, treememory=TREEMEM_LIM, run_solver=run_solver,
-                problem_name=problem_name, solver_path=solver, filename=output_filename)
+            (objective, vals) = cplex_py.solve_using_CPLEX(
+                objective=cplex_py.Expression(
+                    terms_list=[cplex_py.CoeffVar(var=binaries[0])]),
+                constraints=constraints, binaries=binaries, maximize=True,
+                clean_files=True, treememory=TREEMEM_LIM,
+                run_solver=run_solver, problem_name=problem_name,
+                solver_path=solver, filename=output_filename)
         if run_solver:
             if objective is None:
                 return
@@ -779,9 +933,11 @@ class ProblemInstance():
                         if len(s) == 3:
                             couple = couple_dict[int(s[0])]
                             if int(s[1]) != NIL_HOSPITAL_UID:
-                                self.matching[couple.residents[0].uid] = int(s[1])
+                                self.matching[
+                                    couple.residents[0].uid] = int(s[1])
                             if int(s[2]) != NIL_HOSPITAL_UID:
-                                self.matching[couple.residents[1].uid] = int(s[2])
+                                self.matching[
+                                    couple.residents[1].uid] = int(s[2])
                         elif int(s[1]) != NIL_HOSPITAL_UID:
                             self.matching[int(s[0])] = int(s[1])
 
@@ -791,13 +947,16 @@ class ProblemInstance():
                   output_filename=None):
         if verbose:
             for single in self.singles:
-                print 'Single %d prefs %s' % (single.uid, str(single.preference_function.internal_list))
+                print 'Single %d prefs %s' % (single.uid, str(
+                    single.preference_function.internal_list))
             for couple in self.couples:
-                print 'Couple %d prefs %s' % (couple.uid, str(couple.preference_function.internal_list))
+                print 'Couple %d prefs %s' % (couple.uid, str(
+                    couple.preference_function.internal_list))
                 for resident in couple.residents:
                     print '    Resident %d' % (resident.uid)
             for hospital in self.hospitals:
-                print 'Hospital %d capacity %d prefs %s' % (hospital.uid,
+                print 'Hospital %d capacity %d prefs %s' % (
+                    hospital.uid,
                     hospital.capacity if hospital.capacity is not None else -1,
                     str(hospital.preference_function.internal_list))
 
@@ -807,7 +966,8 @@ class ProblemInstance():
         constraints_buffer_filename = 'constraints_buffer-%d' % (random_suffix)
         while os.path.isfile(constraints_buffer_filename):
             random_suffix = random.randint(0, 100000)
-            constraints_buffer_filename = 'constraints_buffer-%d' % (random_suffix)
+            constraints_buffer_filename = 'constraints_buffer-%d' % (
+                random_suffix)
         if output_filename and not run_solver:
             solver_input_filename = output_filename
         else:
@@ -815,12 +975,13 @@ class ProblemInstance():
         solver_output_filename = 'output-%d' % (random_suffix)
         constraints = ConstraintsBuffer(filename=constraints_buffer_filename)
         num_constraints = 0
-        res_match = {}  # this will keep track of the DIMACS number of each matching variable
+        # this will keep track of the DIMACS number of each matching variable
+        res_match = {}
         var_uid_allocator = UIDAllocator(first_uid=1)
 
         # create numbers for all matching variables
         for resident in self.singles:
-            assert not resident in res_match
+            assert resident not in res_match
             res_match[resident] = {}
             for hospital_uid in resident.get_ordering():
                 hospital = hospital_dict[hospital_uid]
@@ -828,15 +989,17 @@ class ProblemInstance():
                     var_uid_allocator.allocate_uid()
                 variable_registry[res_match[resident][hospital]] = \
                     'xr_%d,%d' % (resident.uid, hospital.uid)
-            res_match[resident][NIL_HOSPITAL] = var_uid_allocator.allocate_uid()
+            res_match[
+                resident][NIL_HOSPITAL] = var_uid_allocator.allocate_uid()
             variable_registry[res_match[resident][NIL_HOSPITAL]] = \
                 'xr_%d,%d' % (resident.uid, NIL_HOSPITAL_UID)
             constraints.append(DIMACSClause([
-                res_match[resident][hospital_dict[h_uid]] for h_uid in resident.get_ordering()]
-                    + [res_match[resident][NIL_HOSPITAL]]))
+                res_match[resident][hospital_dict[h_uid]]
+                for h_uid in resident.get_ordering()]
+                + [res_match[resident][NIL_HOSPITAL]]))
         for couple in self.couples:
             for resident in couple.residents:
-                assert not resident in res_match
+                assert resident not in res_match
                 res_match[resident] = {}
                 for h_uid in couple.get_ranked_hospitals(resident):
                     h = hospital_dict[h_uid]
@@ -844,16 +1007,22 @@ class ProblemInstance():
                         var_uid_allocator.allocate_uid()
                     variable_registry[res_match[resident][h]] = \
                         'xc_%d,%d,%d' % (couple.uid, resident.uid, h_uid)
-                # all residents that are members of a couple have a matching variable that represents the nil hospital
-                res_match[resident][NIL_HOSPITAL] = var_uid_allocator.allocate_uid()
+                # all residents that are members of a couple
+                # have a matching variable that represents the nil hospital
+                res_match[
+                    resident][NIL_HOSPITAL] = var_uid_allocator.allocate_uid()
                 variable_registry[res_match[resident][NIL_HOSPITAL]] = \
-                    'xc_%d,%d,%d' % (couple.uid, resident.uid, NIL_HOSPITAL_UID)
+                    'xc_%d,%d,%d' % (couple.uid,
+                                     resident.uid,
+                                     NIL_HOSPITAL_UID)
                 constraints.append(DIMACSClause([
-                    res_match[resident][hospital_dict[h_uid]] for h_uid in couple.get_ranked_hospitals(resident)]
-                        + [res_match[resident][NIL_HOSPITAL]]))
+                    res_match[resident][hospital_dict[h_uid]]
+                    for h_uid in couple.get_ranked_hospitals(resident)]
+                    + [res_match[resident][NIL_HOSPITAL]]))
         # no resident can be assigned to two hospitals
         for resident in self.singles:
-            for (h1_uid, h2_uid) in combinations(resident.get_ordering() + [NIL_HOSPITAL_UID], 2):
+            for (h1_uid, h2_uid) in combinations(
+                    resident.get_ordering() + [NIL_HOSPITAL_UID], 2):
                 constraints.append(DIMACSClause(
                     [-res_match[resident][hospital_dict[h1_uid]],
                      -res_match[resident][hospital_dict[h2_uid]]]))
@@ -862,15 +1031,16 @@ class ProblemInstance():
         for couple in self.couples:
             for resident in couple.residents:
                 for (h1_uid, h2_uid) in combinations(
-                                            set(couple.get_ranked_hospitals(resident) +
-                                            [NIL_HOSPITAL_UID]), 2):
+                    set(couple.get_ranked_hospitals(resident) +
+                        [NIL_HOSPITAL_UID]), 2):
                     constraints.append(DIMACSClause(
                         [-res_match[resident][hospital_dict[h1_uid]],
                          -res_match[resident][hospital_dict[h2_uid]]]))
 
         """
         counter variables
-        q[program][number_counted][total]: after summing the number_counted most-preferred
+        q[program][number_counted][total]: after summing the
+            number_counted most-preferred
             matching variables for program, the total was total
         q[program][0][0] is always True
         q[program][number_counted][program capacity + 1] is always False
@@ -932,13 +1102,14 @@ class ProblemInstance():
                                  -q[h][i - 1][j], q[h][i][j]]))
                             constraints.append(DIMACSClause(
                                 [res_match[resident_dict[ordering[i - 1]]][h],
-                                q[h][i - 1][j], -q[h][i][j]]))
+                                 q[h][i - 1][j], -q[h][i][j]]))
                             constraints.append(DIMACSClause(
                                 [-res_match[resident_dict[ordering[i - 1]]][h],
-                                q[h][i - 1][j - 1], -q[h][i][j]]))
+                                 q[h][i - 1][j - 1], -q[h][i][j]]))
                 # capacity constraints (assertions)
                 if i >= h.capacity + 1:
-                    constraints.append(DIMACSClause([-q[h][i][h.capacity + 1]]))
+                    constraints.append(DIMACSClause(
+                        [-q[h][i][h.capacity + 1]]))
 
         """
         more auxiliary vars
@@ -1004,18 +1175,21 @@ class ProblemInstance():
                     -res_match[couple.residents[0]][NIL_HOSPITAL],
                     -res_match[couple.residents[1]][NIL_HOSPITAL]]))
 
-        # each couple must be matched to one of their ranked pairs or (nil, nil)
+        # each couple must be matched to one of
+        # their ranked pairs or (nil, nil)
         for couple in self.couples:
             constraints.append(DIMACSClause(
-                [cpref[couple][number] for number in xrange(len(couple.get_ordering()) + 1)]))
+                [cpref[couple][number] for number in
+                 xrange(len(couple.get_ordering()) + 1)]))
 
         def append_q_vars(l, q_vars):
             l_copy = list(l)
             for q_var in q_vars:
                 (hospital, resident, number) = q_var
                 if (not hospital == NIL_HOSPITAL
-                    and hospital.get_rank(resident.uid) >= number):
-                    l_copy.append(q[hospital][hospital.get_rank(resident.uid)][number])
+                        and hospital.get_rank(resident.uid) >= number):
+                    l_copy.append(q[hospital][hospital.get_rank(
+                        resident.uid)][number])
             return l_copy
 
         # instability for singles
@@ -1023,8 +1197,10 @@ class ProblemInstance():
             for h_uid in single.get_ordering():
                 h = hospital_dict[h_uid]
                 constraints.append(DIMACSClause(
-                    append_q_vars([res_match[single][hospital_dict[uid]] for uid in single.get_all_weakly_preferred(h_uid)],
-                        [(h, single, h.capacity)])))
+                    append_q_vars([res_match[
+                        single][hospital_dict[uid]]
+                        for uid in single.get_all_weakly_preferred(
+                            h_uid)], [(h, single, h.capacity)])))
 
         # one member of a couple switches
         for couple in self.couples:
@@ -1036,31 +1212,39 @@ class ProblemInstance():
                 h1 = hospital_dict[ordering[number][1]]
                 if not h0 == h1:
                     constraints.append(DIMACSClause(
-                        append_q_vars([-res_match[r1][h1], cpref[couple][number]],
-                        [(h0, r0, h0.capacity)])))
+                        append_q_vars([-res_match[r1][h1],
+                                      cpref[couple][number]],
+                                      [(h0, r0, h0.capacity)])))
                     constraints.append(DIMACSClause(
-                        append_q_vars([-res_match[r0][h0], cpref[couple][number]],
-                        [(h1, r1, h1.capacity)])))
+                        append_q_vars([-res_match[r0][h0],
+                                      cpref[couple][number]],
+                                      [(h1, r1, h1.capacity)])))
                 else:
                     if h0.get_rank(r0.uid) < h0.get_rank(r1.uid):
                         constraints.append(DIMACSClause(
-                            append_q_vars([-res_match[r1][h1], cpref[couple][number]],
-                            [(h0, r0, h0.capacity), (h1, r1, h1.capacity - 1)])))
+                            append_q_vars([-res_match[r1][h1],
+                                          cpref[couple][number]],
+                                          [(h0, r0, h0.capacity),
+                                          (h1, r1, h1.capacity - 1)])))
                         constraints.append(DIMACSClause(
-                            append_q_vars([-res_match[r0][h0], cpref[couple][number]],
-                            [(h1, r1, h1.capacity)])))
+                            append_q_vars([-res_match[r0][h0],
+                                          cpref[couple][number]],
+                                          [(h1, r1, h1.capacity)])))
                     else:
                         constraints.append(DIMACSClause(
-                            append_q_vars([-res_match[r1][h1], cpref[couple][number]],
-                            [(h0, r0, h0.capacity)])))
+                            append_q_vars([-res_match[r1][h1],
+                                          cpref[couple][number]],
+                                          [(h0, r0, h0.capacity)])))
                         constraints.append(DIMACSClause(
-                            append_q_vars([-res_match[r0][h0], cpref[couple][number]],
-                            [(h0, r0, h0.capacity - 1), (h1, r1, h1.capacity)])))
+                            append_q_vars([-res_match[r0][h0],
+                                          cpref[couple][number]],
+                                          [(h0, r0, h0.capacity - 1),
+                                          (h1, r1, h1.capacity)])))
             # also consider switch to (nil, nil)
-            constraints.append(DIMACSClause([-res_match[r0][NIL_HOSPITAL],
-                    cpref[couple][len(ordering)]]))
-            constraints.append(DIMACSClause([-res_match[r1][NIL_HOSPITAL],
-                    cpref[couple][len(ordering)]]))
+            constraints.append(DIMACSClause(
+                [-res_match[r0][NIL_HOSPITAL], cpref[couple][len(ordering)]]))
+            constraints.append(DIMACSClause(
+                [-res_match[r1][NIL_HOSPITAL], cpref[couple][len(ordering)]]))
 
         # both members of a couple switch
         for couple in self.couples:
@@ -1075,19 +1259,23 @@ class ProblemInstance():
                 if not h0 == h1:
                     constraints.append(DIMACSClause(
                         append_q_vars([res_match[r0][h0], res_match[r1][h1],
-                            cpref[couple][number]],
-                            [(h0, r0, h0.capacity), (h1, r1, h1.capacity)])))
+                                      cpref[couple][number]],
+                                      [(h0, r0, h0.capacity),
+                                       (h1, r1, h1.capacity)])))
                 else:
                     if h0.capacity == 1:
                         continue
                     constraints.append(DIMACSClause(
                         append_q_vars([res_match[r0][h0], res_match[r1][h1],
-                            cpref[couple][number]],
-                            [(h0, r0, h0.capacity), (h1, r1, h1.capacity),
-                             (h0, r0, h0.capacity - 1), (h1, r1, h1.capacity - 1)])))
+                                      cpref[couple][number]],
+                                      [(h0, r0, h0.capacity),
+                                       (h1, r1, h1.capacity),
+                                       (h0, r0, h0.capacity - 1),
+                                       (h1, r1, h1.capacity - 1)])))
             # also, consider switch to (nil, nil)
-            constraints.append(DIMACSClause([res_match[r0][NIL_HOSPITAL], res_match[r1][NIL_HOSPITAL],
-                    cpref[couple][len(ordering)]]))
+            constraints.append(DIMACSClause([res_match[r0][NIL_HOSPITAL],
+                                             res_match[r1][NIL_HOSPITAL],
+                                             cpref[couple][len(ordering)]]))
 
         if verbose:
             constraints.flush(variable_registry=variable_registry)
@@ -1108,7 +1296,7 @@ class ProblemInstance():
                         value_dict[res_match[r][h]] = True
                         r_match_dict[r] = h
                         if h.uid != NIL_HOSPITAL_UID:
-                            assert not h in h_hash
+                            assert h not in h_hash
                             h_hash[h] = True
                             ordering = h.get_ordering()
                             found_match = False
@@ -1122,7 +1310,7 @@ class ProblemInstance():
                                 else:
                                     value_dict[q[h][i][0]] = True
             for h in self.hospitals:
-                if not h in h_hash:
+                if h not in h_hash:
                     ordering = h.get_ordering()
                     for i in xrange(1, len(ordering) + 1):
                         value_dict[q[h][i][0]] = True
@@ -1131,10 +1319,10 @@ class ProblemInstance():
                 r0 = couple.residents[0]
                 r1 = couple.residents[1]
                 found_match = False
-                if not r0 in r_match_dict:
+                if r0 not in r_match_dict:
                     r_match_dict[r0] = NIL_HOSPITAL
                     value_dict[res_match[r0][NIL_HOSPITAL]] = True
-                if not r1 in r_match_dict:
+                if r1 not in r_match_dict:
                     r_match_dict[r1] = NIL_HOSPITAL
                     value_dict[res_match[r1][NIL_HOSPITAL]] = True
                 for number in xrange(len(ordering)):
@@ -1159,7 +1347,9 @@ class ProblemInstance():
                 for line in f:
                     if not eval_str_clause(line):
                         s = line.split()
-                        print [variable_registry[int(x)] if int(x) > 0 else ("-" + variable_registry[-int(x)] if int(x) < 0 else None) for x in s]
+                        print [variable_registry[int(x)] if int(x) > 0
+                               else ("-" + variable_registry[-int(x)]
+                               if int(x) < 0 else None) for x in s]
             return
         constraints.flush()
         num_constraints = 0
@@ -1169,14 +1359,16 @@ class ProblemInstance():
                     continue
                 num_constraints += 1
         with open(solver_input_filename, 'w') as problem:
-            problem.write('p cnf %s %s\n' % (var_uid_allocator.last_uid, num_constraints))
+            problem.write('p cnf %s %s\n' % (
+                var_uid_allocator.last_uid, num_constraints))
             with open(constraints.filename, 'r') as f:
                 for line in f:
                     if all(c in string.whitespace for c in line):
                         continue
                     problem.write(line)
         if run_solver:
-            os.system('%s %s > %s' % (solver, solver_input_filename, solver_output_filename))
+            os.system('%s %s > %s' % (
+                solver, solver_input_filename, solver_output_filename))
             if verbose:
                 with open(solver_output_filename, 'r') as f:
                     for line in f:
@@ -1186,7 +1378,8 @@ class ProblemInstance():
                         else:
                             for var_str in s:
                                 if var_str != '0':
-                                    print '%s: %s' % (variable_registry[abs(int(var_str))],
+                                    print '%s: %s' % (
+                                        variable_registry[abs(int(var_str))],
                                         '1' if int(var_str) > 0 else '0')
             matching_found = True
             with open(solver_output_filename, 'r') as f:
@@ -1202,19 +1395,29 @@ class ProblemInstance():
                             s = line.split()
                             for var_str in s[1:]:
                                 if var_str != '0':
-                                    var_name = variable_registry[abs(int(var_str))]
+                                    var_name = variable_registry[
+                                        abs(int(var_str))]
                                     if var_name.startswith('xr'):
                                         if int(var_str) > 0:
-                                            self.matching[int(var_name[3:var_name.find(',')])] = int(
-                                            var_name[var_name.find(',') + 1:len(var_name)])
+                                            self.matching[
+                                                int(var_name[
+                                                    3:var_name.find(',')])] \
+                                                = int(var_name[
+                                                    var_name.find(',')
+                                                    + 1:len(var_name)])
                                     elif var_name.startswith('xc'):
                                         if int(var_str) > 0:
-                                            self.matching[int(var_name.split(',')[1])] = int(var_name.split(',')[2])
+                                            self.matching[
+                                                int(var_name.split(
+                                                    ',')[1])] = int(
+                                                        var_name.split(',')[2])
                             for single in self.singles:
-                                if not single.uid in self.matching:
-                                    self.matching[single.uid] = NIL_HOSPITAL_UID
+                                if single.uid not in self.matching:
+                                    self.matching[
+                                        single.uid] = NIL_HOSPITAL_UID
             assert not matching_found or self.matching
-            os.system('rm %s %s' % (solver_input_filename, solver_output_filename))
+            os.system('rm %s %s' % (solver_input_filename,
+                                    solver_output_filename))
         os.system('rm %s' % constraints_buffer_filename)
 
 
@@ -1236,11 +1439,21 @@ def main():
     output_filename = None
     run_solver = True
     parser = argparse.ArgumentParser()
-    parser.add_argument('problem', help='the input problem file in the format described in the readme')
-    parser.add_argument('-v', '--verbose', help='display more detail in problem formulation', action="store_true")
-    parser.add_argument('--solver', help='the solver to be used: mip or sat', required=True, choices=['sat', 'mip'])
-    parser.add_argument('--formulate', help='formulate, but do not solve, the problem', action="store_true")
-    parser.add_argument('-o', '--output', help='output filename')
+    parser.add_argument(
+        'problem',
+        help='the input problem file in the format described in the readme')
+    parser.add_argument(
+        '-v', '--verbose',
+        help='display more detail in problem formulation', action="store_true")
+    parser.add_argument(
+        '--solver',
+        help='the solver to be used: mip or sat', required=True,
+        choices=['sat', 'mip'])
+    parser.add_argument(
+        '--formulate',
+        help='formulate, but do not solve, the problem', action="store_true")
+    parser.add_argument(
+        '-o', '--output', help='output filename')
     args = parser.parse_args()
     if args.verbose:
         verbose = True
@@ -1256,18 +1469,25 @@ def main():
     if args.solver == 'sat':
         solver_path = os.environ.get('SAT_SOLVER_PATH')
         if solver_path is None and run_solver:
-            raise Exception('SAT_SOLVER_PATH must contain the path to a SAT solver that accepts the DIMACS input format')
-        header = problem.solve_sat(solver=solver_path, verbose=verbose, run_solver=run_solver,
-                                   problem_name=args.problem, output_filename=output_filename)
+            raise Exception(
+                'SAT_SOLVER_PATH must contain the path to a'
+                + 'SAT solver that accepts the DIMACS input format')
+        header = problem.solve_sat(solver=solver_path, verbose=verbose,
+                                   run_solver=run_solver,
+                                   problem_name=args.problem,
+                                   output_filename=output_filename)
     elif args.solver == 'mip':
         solver_path = os.environ.get('CPLEX_PATH')
         if solver_path is None and run_solver:
-            raise Exception('CPLEX_PATH must contain the path to CPLEX or another MIP solver that accepts CPLEX input')
-        header = problem.solve_mip(solver=solver_path, verbose=verbose, run_solver=run_solver,
-                                   problem_name=args.problem, output_filename=output_filename)
+            raise Exception('CPLEX_PATH must contain the path to CPLEX or'
+                            + 'another MIP solver that accepts CPLEX input')
+        header = problem.solve_mip(solver=solver_path, verbose=verbose,
+                                   run_solver=run_solver,
+                                   problem_name=args.problem,
+                                   output_filename=output_filename)
     if run_solver:
         ProblemInstance.print_matching(problem.matching,
-            output_filename, header=header)
+                                       output_filename, header=header)
 
 if __name__ == "__main__":
     main()
