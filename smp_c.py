@@ -944,7 +944,8 @@ class ProblemInstance():
     def solve_sat(self, solver,
                   problem_name='problem',
                   verbose=False, verify_file=None, run_solver=True,
-                  output_filename=None):
+                  output_filename=None,
+                  enumerate_all=False, find_RPopt=False):
         if verbose:
             for single in self.singles:
                 print 'Single %d prefs %s' % (single.uid, str(
@@ -1351,22 +1352,30 @@ class ProblemInstance():
                                else ("-" + variable_registry[-int(x)]
                                if int(x) < 0 else None) for x in s]
             return
-        constraints.flush()
-        num_constraints = 0
-        with open(constraints.filename, 'r') as f:
-            for line in f:
-                if all(c in string.whitespace for c in line):
-                    continue
-                num_constraints += 1
-        with open(solver_input_filename, 'w') as problem:
-            problem.write('p cnf %s %s\n' % (
-                var_uid_allocator.last_uid, num_constraints))
+        count = 0
+        extra_constraints = []
+        keep_searching = True
+        while keep_searching:
+            constraints.flush()
+            num_constraints = 0
             with open(constraints.filename, 'r') as f:
                 for line in f:
                     if all(c in string.whitespace for c in line):
                         continue
-                    problem.write(line)
-        if run_solver:
+                    num_constraints += 1
+            num_constraints += len(extra_constraints)
+            with open(solver_input_filename, 'w') as problem:
+                problem.write('p cnf %s %s\n' % (
+                    var_uid_allocator.last_uid, num_constraints))
+                with open(constraints.filename, 'r') as f:
+                    for line in f:
+                        if all(c in string.whitespace for c in line):
+                            continue
+                        problem.write(line)
+                for constraint in extra_constraints:
+                    problem.write(constraint.render() + '\n')
+            if not run_solver:
+                return
             os.system('%s %s > %s' % (
                 solver, solver_input_filename, solver_output_filename))
             if verbose:
@@ -1416,9 +1425,48 @@ class ProblemInstance():
                                     self.matching[
                                         single.uid] = NIL_HOSPITAL_UID
             assert not matching_found or self.matching
+            if not matching_found:
+                os.system('rm %s' % constraints_buffer_filename)
             os.system('rm %s %s' % (solver_input_filename,
                                     solver_output_filename))
-        os.system('rm %s' % constraints_buffer_filename)
+            if find_RPopt:
+                if not matching_found and count == 0:
+                    print "Search for resident-optimal matching failed because there were no stable matchings"
+                    return "Search for resident-optimal matching failed because there were no stable matchings"
+                if not matching_found:
+                    print "Generated stable matchings to find resident-optimal: %d" % count
+                    return "Generated stable matchings to find resident-optimal: %d" % count
+                ProblemInstance.print_matching(self.matching, '%s-opt%d' % (output_filename, count))
+                count += 1
+                extra_constraints = []
+                # add to constraints to exclude this matching
+                # first, all must be matched to as good or better
+                for single in self.singles:
+                    if self.matching[single.uid] != NIL_HOSPITAL_UID:
+                        extra_constraints.append(DIMACSClause(
+                            [res_match[single][hospital_dict[h_uid]] for h_uid in single.get_all_weakly_preferred(self.matching[single.uid])]))
+                for couple in self.couples:
+                    (h0_uid, h1_uid) = (self.matching[couple.residents[0].uid], self.matching[couple.residents[1].uid])
+                    if (h0_uid, h1_uid) != (NIL_HOSPITAL_UID, NIL_HOSPITAL_UID):
+                        extra_constraints.append(DIMACSClause([cpref[couple][couple.get_rank((h0_uid, h1_uid))]]))
+                # at least one matching must change
+                extra_constraints.append(DIMACSClause(
+                    [-res_match[resident_dict[r_uid]][hospital_dict[self.matching[r_uid]]] for r_uid in self.matching]))
+            elif enumerate_all:
+                if not matching_found and count == 0:
+                    print "Matchings found: 0"
+                    return "Matchings found: 0"
+                if not matching_found:
+                    print "Matchings found: %d" % count
+                    return "Matchings found: %d" % count
+                ProblemInstance.print_matching(self.matching, '%s-all%d' % (output_filename, count))
+                count += 1
+                # at least one matching must change
+                constraints.append(DIMACSClause(
+                    [-res_match[resident_dict[r_uid]][hospital_dict[self.matching[r_uid]]] for r_uid in self.matching]))
+            else:
+                keep_searching = False
+                os.system('rm %s' % constraints_buffer_filename)
 
 
 SUFFIX_TABLE = {
@@ -1435,7 +1483,6 @@ FORMULATION_TABLE = {
 
 
 def main():
-    verbose = False
     output_filename = None
     run_solver = True
     parser = argparse.ArgumentParser()
@@ -1447,16 +1494,20 @@ def main():
         help='display more detail in problem formulation', action="store_true")
     parser.add_argument(
         '--solver',
-        help='the solver to be used: mip or sat', required=True,
-        choices=['sat', 'mip'])
+        help='the solver to be used: mip or sat',
+        choices=['sat', 'mip'], default='sat')
     parser.add_argument(
         '--formulate',
         help='formulate, but do not solve, the problem', action="store_true")
     parser.add_argument(
+        '--enumerate_all',
+        help='enumerate all stable matchings', action="store_true")
+    parser.add_argument(
+        '--find_RPopt',
+        help='find an RPopt matching', action="store_true")
+    parser.add_argument(
         '-o', '--output', help='output filename')
     args = parser.parse_args()
-    if args.verbose:
-        verbose = True
     if not args.output and not args.formulate:
         output_filename = args.problem + SUFFIX_TABLE[args.solver]
     elif not args.output and args.formulate:
@@ -1465,23 +1516,31 @@ def main():
         output_filename = args.output
     if args.formulate:
         run_solver = False
+    if args.enumerate_all and args.find_RPopt:
+        raise Exception("can't enumerate all stable matchings and " +
+                        "find an RPopt matching in a single run")
+    if args.solver == 'mip' and (args.enumerate_all or args.find_RPopt):
+        raise Exception("MIP enumeration or finding RPopt matching "
+                        + "not implemented")
     problem = ProblemInstance.from_file(args.problem)
     if args.solver == 'sat':
         solver_path = os.environ.get('SAT_SOLVER_PATH')
         if solver_path is None and run_solver:
             raise Exception(
-                'SAT_SOLVER_PATH must contain the path to a'
+                'SAT_SOLVER_PATH must contain the path to a '
                 + 'SAT solver that accepts the DIMACS input format')
-        header = problem.solve_sat(solver=solver_path, verbose=verbose,
+        header = problem.solve_sat(solver=solver_path, verbose=args.verbose,
                                    run_solver=run_solver,
                                    problem_name=args.problem,
-                                   output_filename=output_filename)
+                                   output_filename=output_filename,
+                                   enumerate_all=args.enumerate_all,
+                                   find_RPopt=args.find_RPopt)
     elif args.solver == 'mip':
         solver_path = os.environ.get('CPLEX_PATH')
         if solver_path is None and run_solver:
-            raise Exception('CPLEX_PATH must contain the path to CPLEX or'
+            raise Exception('CPLEX_PATH must contain the path to CPLEX or '
                             + 'another MIP solver that accepts CPLEX input')
-        header = problem.solve_mip(solver=solver_path, verbose=verbose,
+        header = problem.solve_mip(solver=solver_path, verbose=args.verbose,
                                    run_solver=run_solver,
                                    problem_name=args.problem,
                                    output_filename=output_filename)
