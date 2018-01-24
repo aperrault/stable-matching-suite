@@ -3,7 +3,8 @@ Stable Matching Suite: Tools for Solving Generalized Stable Matching Problems
 
 Authors: Fahiem Bacchus, Joanna Drummond, Andrew Perrault
 
-Related Paper: http://ijcai.org/papers15/Papers/IJCAI15-079.pdf
+Related Papers: http://ijcai.org/papers15/Papers/IJCAI15-079.pdf,
+http://www.cs.toronto.edu/~perrault/perrault_drummond_bacchus_aamas16.pdf
 
 Contents  
 ==================================================================  
@@ -46,7 +47,7 @@ where cid is the couple id, rid1 and rid2 are the resident ids of the first and 
 p line  
 ------  
 "p pid quota rol"  
-where pid is the program id, quota is the program's quota (integer >= 0) and rol is an ordered sequence of resident ids. 
+where pid is the program id, quota is the program's quota (integer >= 0) and rol is an ordered sequence of resident ids.
 
 
 Output Matching Format  
@@ -70,11 +71,11 @@ If 1 then the file should contain a valid match. This allows the
 matcher more gracefully handle a time out or detect a cycle: it can
 fail to output a matching file. (If the match file is empty "m 0" is
 implicit). In these cases the matcher is asserting that it could not
-find a match. 
+find a match.
 
 When it does find a match it should place a "m 1" line in the match
 file. This asserts it found a match, now the verifier can check that
-the match is correct. 
+the match is correct.
 
 r line  
 ------  
